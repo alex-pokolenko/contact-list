@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ContactList</fullName>
+    <types>
+        <members>ContactListController</members>
+        <members>ContactListService</members>
+        <members>ProviderInterface</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>ContactList</members>
+        <name>ApexPage</name>
+    </types>
+    <version>43.0</version>
+</Package>

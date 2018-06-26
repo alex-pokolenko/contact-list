@@ -14,12 +14,5 @@ declare global {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  /**
-   * TODO: move this logic to slds-icon component
-   */
-  private sldsIconsPath = window.sldsConfig.sldsIconsPath;
 
-  sldsPath(icon: string): string {
-    return this.sldsIconsPath + icon;
-  }
 }

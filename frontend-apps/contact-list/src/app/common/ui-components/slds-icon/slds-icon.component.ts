@@ -18,12 +18,12 @@ declare global {
 @Component({
   selector: 'app-slds-icon',
   templateUrl: './slds-icon.component.html',
-  styleUrls: ['./slds-icon.component.css']
+  styleUrls: ['./slds-icon.component.scss']
 })
 export class SldsIconComponent implements OnInit {
   /**
    * Relative path to the icon asset.
-   * This will typically be actual to the path specified in SLDS examples
+   * This will typically be equal to the path specified in SLDS examples
    *
    * @type {string}
    * @memberof SldsIconComponent

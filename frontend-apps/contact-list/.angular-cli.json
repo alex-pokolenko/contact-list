@@ -10,13 +10,29 @@
       "assets": [
         "assets",
         "favicon.ico",
-        { "glob": "**/*", "input": "../node_modules/@salesforce-ux/design-system/assets/styles", "output": "assets/styles" },
-        { "glob": "**/*", "input": "../node_modules/@salesforce-ux/design-system/assets/fonts", "output": "assets/fonts" },
-        { "glob": "**/*", "input": "../node_modules/@salesforce-ux/design-system/assets/images", "output": "assets/images" },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/@salesforce-ux/design-system/assets/styles",
+          "output": "assets/styles",
+          "allowOutsideOutDir": false
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/@salesforce-ux/design-system/assets/fonts",
+          "output": "assets/fonts",
+          "allowOutsideOutDir": false
+        },
+        {
+          "glob": "**/*",
+          "input": "../node_modules/@salesforce-ux/design-system/assets/images",
+          "output": "assets/images",
+          "allowOutsideOutDir": false
+        },
         {
           "glob": "**/symbols.svg",
           "input": "../node_modules/@salesforce-ux/design-system/assets/icons",
-          "output": "assets/icons"
+          "output": "assets/icons",
+          "allowOutsideOutDir": false
         }
       ],
       "index": "index.html",
@@ -27,7 +43,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "styles.scss"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
@@ -62,7 +78,8 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
-    "component": {}
+    "styleExt": "scss",
+    "component": {
+    }
   }
 }

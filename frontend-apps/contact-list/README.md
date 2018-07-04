@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve -ssl --public-host https://localhost:4200` for a dev server. Navigate to `http://localhost:4200/` or *your Dev visualforce page* that utilizes resources from localhost. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 

@@ -1,0 +1,17 @@
+<table class="slds-table slds-table_bordered slds-table_cell-buffer">
+  <thead>
+    <tr class="slds-text-title_caps">
+      <th scope="col" *ngFor="let column of table.columns">
+        <div class="slds-truncate" title="{{column.label}}">{{column.label}}</div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr 
+      *ngFor="let row of table.rows" 
+      app-data-table-row
+      [columns]="table.columns"
+      [row]="row">
+    </tr>
+  </tbody>
+</table>

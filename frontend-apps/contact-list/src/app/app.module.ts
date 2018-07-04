@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { UiComponentsModule } from './common/ui-components/ui-components.module';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { ContactFilterComponent } from './contact-filter/contact-filter.component';
+import { CoreModule } from './core/core.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { ContactFilterComponent } from './contact-filter/contact-filter.componen
   ],
   imports: [
     BrowserModule,
-    UiComponentsModule
+    UiComponentsModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

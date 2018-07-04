@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ContactListService } from './contact-list.service';
 
 @Component({
   selector: 'app-contact-list',
   templateUrl: './contact-list.component.html',
-  styleUrls: ['./contact-list.component.scss']
+  styleUrls: ['./contact-list.component.scss'],
+  providers: [ContactListService]
 })
 export class ContactListComponent implements OnInit {
 
@@ -22,9 +24,17 @@ export class ContactListComponent implements OnInit {
     ]
   };
 
-  constructor() { }
+  constructor(private contactListService: ContactListService) { }
 
   ngOnInit() {
+    this.contactListService.initColumns().then(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
 }

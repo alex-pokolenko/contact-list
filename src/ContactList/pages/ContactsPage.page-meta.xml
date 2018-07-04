@@ -3,5 +3,5 @@
     <apiVersion>43.0</apiVersion>
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
-    <label>ContactList</label>
+    <label>ContactsPage</label>
 </ApexPage>

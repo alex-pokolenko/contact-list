@@ -8,7 +8,7 @@
         <name>ApexClass</name>
     </types>
     <types>
-        <members>ContactList</members>
+        <members>ContactsPage</members>
         <name>ApexPage</name>
     </types>
     <types>

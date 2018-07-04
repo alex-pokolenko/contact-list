@@ -2,8 +2,8 @@
   <head>
     <meta charset="utf-8"/>
 
-    <title>ContactList</title>
-    <base href="/apex/ContactList/"/>
+    <title>ContactsPage</title>
+    <base href="/apex/ContactsPage/"/>
   
     <link rel="stylesheet" href="https://localhost:4200/styles.css"/>
     <link rel="stylesheet" href="https://localhost:4200/assets/styles/salesforce-lightning-design-system.min.css"/>
@@ -15,13 +15,11 @@
       };
     </script>
   </head>
-
   <body class="slds-scope">
     <app-root></app-root>
 
     <script type="text/javascript" src="https://localhost:4200/inline.bundle.js"></script>
     <script type="text/javascript" src="https://localhost:4200/polyfills.bundle.js"></script>
-    <script type="text/javascript" src="https://localhost:4200/scripts.bundle.js"></script>
     <script type="text/javascript" src="https://localhost:4200/styles.bundle.js"></script>
     <script type="text/javascript" src="https://localhost:4200/vendor.bundle.js"></script>
 

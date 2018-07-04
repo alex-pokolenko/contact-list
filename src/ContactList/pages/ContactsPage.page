@@ -1,4 +1,4 @@
-<apex:page showHeader="true" applyHtmlTag="true" standardStylesheets="false" sidebar="false" docType="html-5.0" applyBodyTag="false">
+<apex:page controller="ContactListController" showHeader="true" applyHtmlTag="true" standardStylesheets="false" sidebar="false" docType="html-5.0" applyBodyTag="false">
   <head>
     <meta charset="utf-8"/>
 
@@ -11,7 +11,11 @@
     <!-- SLDS is served from app assets. This path can point to $Asset.SLDS as an alternative -->
     <script type="text/javascript">
       window.sldsConfig = {
-        sldsIconsPath: "{!URLFOR($Resource.contactList, '/assets/icons')}"
+        sldsIconsPath: "{!URLFOR($Resource.contactList, '/assets/icons')}",
+      };
+      window.remotingConfig = {
+        // TODO: controller name should consider namespace prefix
+        VISUALFORCE_CONTROLLER: ContactListController
       };
     </script>
   </head>

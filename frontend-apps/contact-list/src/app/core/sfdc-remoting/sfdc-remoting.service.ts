@@ -8,6 +8,12 @@ declare global {
   }
 }
 
+const REMOTING_OPTIONS = {
+  buffer: true,
+  timeout: 120000,
+  escape: false
+};
+
 @Injectable()
 export class SfdcRemotingService {
 
@@ -32,15 +38,13 @@ export class SfdcRemotingService {
     return result;
   }
 
-  remoteRequest(serviceName: string, methodName: string, params: string, wrapResponse = false): Promise<any> {
-    params = params || '';
-
+  remoteRequest(serviceName: string, methodName: string, params: any = {}): Promise<any> {
     return new Promise((resolve, reject) => {
       if (this.remotingConfig) {
         this.remotingConfig.VISUALFORCE_CONTROLLER.remoteRequest(
           serviceName,
           methodName,
-          params,
+          JSON.stringify(params),
           (response, event) => {
             if (event.status) {
               resolve(this.parseSfdcJson(response));
@@ -48,7 +52,7 @@ export class SfdcRemotingService {
               reject(event);
             }
           },
-          { buffer: true, timeout: 120000, escape: false }
+          REMOTING_OPTIONS
         );
       } else {
         reject('No remoting configuration provided.');

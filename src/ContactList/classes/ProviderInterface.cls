@@ -1,4 +1,4 @@
 public interface ProviderInterface {
 
-    String remoteRequest(String action, String params);
+  String remoteRequest(String action, String params);
 }

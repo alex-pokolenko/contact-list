@@ -5,12 +5,21 @@
         <members>ContactListController</members>
         <members>ContactListProvider</members>
         <members>ContactListService</members>
+        <members>HelperService</members>
         <members>ProviderInterface</members>
         <name>ApexClass</name>
     </types>
     <types>
         <members>ContactsPage</members>
         <name>ApexPage</name>
+    </types>
+    <types>
+        <members>Contact.Salary__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>Contact.Contacts_Page</members>
+        <name>FieldSet</name>
     </types>
     <types>
         <members>contactList</members>

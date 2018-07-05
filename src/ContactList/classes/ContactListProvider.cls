@@ -1,17 +1,17 @@
 public class ContactListProvider implements ProviderInterface {
 
   public static String remoteRequest(String methodName, String params) {
-    String result;
+    Object result;
 
     switch on methodName {
       when 'initColumns' {
-        result = JSON.serialize(ContactListService.initColumns());
+        result = ContactListService.initColumns();
       }
-      when 'getContacts' {
-
+      when 'getRecords' {
+        result = ContactListService.getRecords();
       }
     }
 
-    return result;
+    return JSON.serialize(result);
   }
 }

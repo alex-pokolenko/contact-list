@@ -12,29 +12,24 @@ export class ContactListComponent implements OnInit {
   private filterPanelOpened = false;
 
   private table: DataTable = {
-    columns: [
-      { apiName: 'name', label: 'Name' },
-      { apiName: 'gender', label: 'Gender' },
-      { apiName: 'company', label: 'Company' }
-    ],
-    rows: [
-      { name: 'Austin', gender: 'Male', company: 'Swimlane' },
-      { name: 'Dany', gender: 'Male', company: 'KFC' },
-      { name: 'Molly', gender: 'Female', company: 'Burger King' },
-    ]
+    columns: [],
+    rows: []
   };
 
-  constructor(private contactListService: ContactListService) { }
+  constructor(
+    private contactListService: ContactListService
+  ) { }
 
   ngOnInit() {
-    this.contactListService.initColumns().then(
-      response => {
-        console.log(response);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    this.getData();
+  }
+
+  private async getData(): Promise<any> {
+    this.table.columns = await this.contactListService.initColumns();
+    const contacts = await this.contactListService.getRecords();
+
+    this.table.rows = this.contactListService.mapFields(contacts, this.table.columns);
+    console.log(this.table.rows);
   }
 
 }

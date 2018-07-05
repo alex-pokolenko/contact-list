@@ -8,11 +8,32 @@ export class ContactListService {
     private sfdcService: SfdcRemotingService
   ) { }
 
-  async initColumns(): Promise<any> {
+  async initColumns(): Promise<any[]> {
     return await this.sfdcService.remoteRequest(
       'ContactListProvider',
-      'initColumns',
-      JSON.stringify({})
+      'initColumns'
     );
+  }
+
+  async getRecords(): Promise<any[]> {
+    return await this.sfdcService.remoteRequest(
+      'ContactListProvider',
+      'getRecords'
+    );
+  }
+
+  mapFields(contacts: any, columns: any): any {
+    return contacts.map(contact => {
+      const row = {
+        id: contact.Id
+      };
+      for (const column of columns) {
+        const path = column.fieldPath.split('.');
+        row[column.fieldPath] = path.length === 2
+          ? contact[path[0]][path[1]]
+          : contact[path[0]];
+      }
+      return row;
+    });
   }
 }

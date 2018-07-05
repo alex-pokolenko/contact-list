@@ -13,7 +13,7 @@ export class DataTableRowComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    console.log(this.row);
+
   }
 
 }

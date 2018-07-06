@@ -14,10 +14,10 @@
       <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="Contacts">Contacts</h1>
     </div>
 
-    <button class="slds-button slds-button_brand">New</button>
+    <button class="slds-button slds-button_brand" (click)="openModal()">New</button>
     <button 
-      (click)="filterPanelOpened=!filterPanelOpened;" 
-      [ngClass]="{'slds-is-selected': filterPanelOpened}" 
+      (click)="isFilterPanelOpen=!isFilterPanelOpen;" 
+      [ngClass]="{'slds-is-selected': isFilterPanelOpen}" 
       class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-border">
       <app-slds-icon 
         styling="slds-button__icon"
@@ -29,11 +29,21 @@
 </div>
 
 <div class="app-main">
+
+  <app-modal 
+    [isOpen]="modalOptions.isModalOpen"
+    [headerText]="modalOptions.headerText"
+    (closed)="onClose($event)">
+    <ng-template #modalContent>
+      <!-- place modal body component here -->
+    </ng-template>
+  </app-modal>
+
   <div class="slds-col slds-p-around_medium">
     <app-contact-table></app-contact-table>
   </div>
   <div
-    [ngClass]="{'slds-is-open': filterPanelOpened}"
+    [ngClass]="{'slds-is-open': isFilterPanelOpen}"
     class="slds-panel slds-size_medium slds-panel_docked slds-panel_docked-right slds-is-directional" aria-hidden="false">
     <div class="slds-panel__header">
       <h2 class="slds-panel__header-title slds-text-heading_small">Filter Contacts</h2>

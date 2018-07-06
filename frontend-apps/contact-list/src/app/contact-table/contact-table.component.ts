@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ContactTableService } from './contact-table.service';
+import { DataTable } from '../common/ui-components/data-table/data-table';
 
 @Component({
   selector: 'app-contact-table',
@@ -9,10 +10,7 @@ import { ContactTableService } from './contact-table.service';
 })
 export class ContactTableComponent implements OnInit {
 
-  private table: DataTable = {
-    columns: [],
-    rows: []
-  };
+  private table = new DataTable();
 
   constructor(
     private contactTableService: ContactTableService

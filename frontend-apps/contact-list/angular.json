@@ -22,6 +22,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
+            "deployUrl": "https://localhost:4200/",
             "assets": [
               "src/assets",
               "src/favicon.ico",
@@ -68,6 +69,14 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "hmr": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hmr.ts"
+                }
+              ]
             }
           }
         },
@@ -79,6 +88,10 @@
           "configurations": {
             "production": {
               "browserTarget": "contact-list:build:production"
+            },
+            "hmr": {
+              "hmr": true,
+              "browserTarget": "contact-list:build:hmr"
             }
           }
         },

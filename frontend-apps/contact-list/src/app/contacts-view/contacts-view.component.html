@@ -36,6 +36,7 @@
     (closed)="onClose($event)">
     <ng-template #modalContent>
       <!-- place modal body component here -->
+      <app-contact-form [inputs]="inputs"></app-contact-form>
     </ng-template>
   </app-modal>
 

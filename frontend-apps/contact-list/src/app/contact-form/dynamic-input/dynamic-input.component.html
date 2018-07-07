@@ -1,0 +1,17 @@
+<div [formGroup]="form" class="slds-form-element">
+  <label [attr.for]="input.key">{{input.label}}</label>
+
+  <div [ngSwitch]="input.controlType">
+
+    <input *ngSwitchCase="'textbox'" [formControlName]="input.key"
+            [id]="input.key" [type]="input.type">
+
+    <select [id]="input.key" *ngSwitchCase="'dropdown'" [formControlName]="input.key">
+      <option *ngFor="let opt of input.options" [value]="opt.key">{{opt.value}}</option>
+    </select>
+
+  </div> 
+
+  <div class="slds-has-error" *ngIf="!isValid">{{input.label}} is required</div>
+</div>
+

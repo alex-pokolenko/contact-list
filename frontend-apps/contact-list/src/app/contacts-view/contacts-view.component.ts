@@ -2,12 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ContactViewService } from './contacts-view.service';
 import { TableMessagingService } from '../common/ui-components/data-table/table-messaging.service';
 import { takeWhile } from 'rxjs/operators';
+import { DynamicInputsService } from '../contact-form/dynamic-inputs.service';
 
 @Component({
   selector: 'app-contacts-view',
   templateUrl: './contacts-view.component.html',
   styleUrls: ['./contacts-view.component.scss'],
-  providers: [ContactViewService]
+  providers: [ContactViewService, DynamicInputsService]
 })
 export class ContactViewComponent implements OnInit, OnDestroy {
 
@@ -19,9 +20,12 @@ export class ContactViewComponent implements OnInit, OnDestroy {
     headerText: 'Contact'
   };
 
+  private inputs: any[];
+
   constructor(
     private contactViewService: ContactViewService,
-    private tableMessagingService: TableMessagingService
+    private tableMessagingService: TableMessagingService,
+    private inputsService: DynamicInputsService
   ) {
     tableMessagingService.rowEditClicked$
       .pipe(takeWhile(() => this.isAlive))
@@ -29,7 +33,8 @@ export class ContactViewComponent implements OnInit, OnDestroy {
         row => {
           this.editRecordModal(row);
         }
-      );
+    );
+    this.inputs = inputsService.getInputs();
   }
 
   ngOnInit() {

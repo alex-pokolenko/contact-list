@@ -1,4 +1,4 @@
-<div [formGroup]="form" class="slds-form-element">
+<div [formGroup]="form">
   <label [attr.for]="input.key">{{input.label}}</label>
 
   <div [ngSwitch]="input.controlType">
@@ -12,6 +12,5 @@
 
   </div> 
 
-  <div class="slds-has-error" *ngIf="!isValid">{{input.label}} is required</div>
+  <div class="errorMessage" *ngIf="!isValid">{{input.label}} is required</div>
 </div>
-

@@ -12,7 +12,9 @@ export class DynamicInputComponent implements OnInit {
   @Input() input: InputBase<any>;
   @Input() form: FormGroup;
 
-  get isValid() { return this.form.controls[this.input.key].valid; }
+  get isValid() {
+    return this.form.controls[this.input.key].valid;
+  }
 
   constructor() { }
 

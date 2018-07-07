@@ -21,12 +21,10 @@
   </head>
   <body class="slds-scope">
     <app-root></app-root>
-
-    <script type="text/javascript" src="https://localhost:4200/inline.bundle.js"></script>
-    <script type="text/javascript" src="https://localhost:4200/polyfills.bundle.js"></script>
-    <script type="text/javascript" src="https://localhost:4200/styles.bundle.js"></script>
-    <script type="text/javascript" src="https://localhost:4200/vendor.bundle.js"></script>
-
-    <script type="text/javascript" src="https://localhost:4200/main.bundle.js"></script>
+    <script type="text/javascript" src="https://localhost:4200/runtime.js"></script>
+    <script type="text/javascript" src="https://localhost:4200/polyfills.js"></script>
+    <script type="text/javascript" src="https://localhost:4200/styles.js"></script>
+    <script type="text/javascript" src="https://localhost:4200/vendor.js"></script>
+    <script type="text/javascript" src="https://localhost:4200/main.js"></script>
   </body>
 </apex:page>

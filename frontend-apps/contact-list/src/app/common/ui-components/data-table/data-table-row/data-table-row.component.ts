@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { TableMessagingService } from '../table-messaging.service';
 
 @Component({
   selector: '[app-data-table-row]',
@@ -10,10 +11,15 @@ export class DataTableRowComponent implements OnInit {
   @Input() row: any;
   @Input() columns: any;
 
-  constructor() {}
+  constructor(private messagingService: TableMessagingService) {}
 
   ngOnInit() {
 
+  }
+
+  private edit(row: any): void {
+    // fire event
+    this.messagingService.edit(row);
   }
 
 }

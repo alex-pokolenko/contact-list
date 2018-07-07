@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ContactViewService } from './contacts-view.service';
+import { TableMessagingService } from '../common/ui-components/data-table/table-messaging.service';
+import { takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'app-contacts-view',
@@ -7,21 +9,35 @@ import { ContactViewService } from './contacts-view.service';
   styleUrls: ['./contacts-view.component.scss'],
   providers: [ContactViewService]
 })
-export class ContactViewComponent implements OnInit {
+export class ContactViewComponent implements OnInit, OnDestroy {
+
+  private isAlive = true;
 
   private isFilterPanelOpen = false;
   private modalOptions = {
     isModalOpen: false,
     headerText: 'Contact'
-  }
-  // private isModalOpen = false;
+  };
 
   constructor(
-    private contactViewService: ContactViewService
-  ) { }
+    private contactViewService: ContactViewService,
+    private tableMessagingService: TableMessagingService
+  ) {
+    tableMessagingService.rowEditClicked$
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe(
+        row => {
+          this.editRecordModal(row);
+        }
+      );
+  }
 
   ngOnInit() {
 
+  }
+
+  ngOnDestroy() {
+    this.isAlive = false;
   }
 
   /**
@@ -42,5 +58,9 @@ export class ContactViewComponent implements OnInit {
    */
   onClose($event: any) {
     this.modalOptions.isModalOpen = false;
+  }
+
+  editRecordModal($event: any) {
+    this.openModal();
   }
 }

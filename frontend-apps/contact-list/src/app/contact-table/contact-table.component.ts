@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ContactTableService } from './contact-table.service';
 import { DataTable } from '../common/ui-components/data-table/data-table';
 
@@ -9,6 +9,8 @@ import { DataTable } from '../common/ui-components/data-table/data-table';
   providers: [ContactTableService]
 })
 export class ContactTableComponent implements OnInit {
+
+  @Output() editRecord = new EventEmitter();
 
   private table = new DataTable();
 
@@ -29,4 +31,3 @@ export class ContactTableComponent implements OnInit {
   }
 
 }
-

@@ -2,15 +2,23 @@ import { Injectable } from '@angular/core';
 
 import { InputBase } from './input-base';
 import { StringInput } from './input-string';
+import { ContactTableService } from '../contact-table/contact-table.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DynamicInputsService {
-  // TODO: get fields from fieldset
-  getInputs() {
+  inputs: InputBase<any>[];
 
-    const inputs: InputBase<any>[] = [
+  constructor(private contactTableService: ContactTableService) { }
+
+  // TODO: get fields from fieldset
+  async getInputs() {
+
+    const columns = await this.contactTableService.initColumns();
+    console.log(columns);
+
+    this.inputs = [
 
       new StringInput({
         key: 'firstName',
@@ -28,9 +36,6 @@ export class DynamicInputsService {
       })
     ];
 
-    return inputs.sort((a, b) => a.order - b.order);
+    return this.inputs.sort((a, b) => a.order - b.order);
   }
-
-  constructor() { }
 }
-

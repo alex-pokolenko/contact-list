@@ -4,15 +4,19 @@ import { SfdcRemotingService } from '../core/sfdc-remoting/sfdc-remoting.service
 @Injectable()
 export class ContactTableService {
 
+  public columns: any;
+
   constructor(
     private sfdcService: SfdcRemotingService
   ) { }
 
   async initColumns(): Promise<any[]> {
-    return await this.sfdcService.remoteRequest(
+    this.columns = await this.sfdcService.remoteRequest(
       'ContactListProvider',
       'initColumns'
     );
+
+    return this.columns;
   }
 
   async getRecords(): Promise<any[]> {

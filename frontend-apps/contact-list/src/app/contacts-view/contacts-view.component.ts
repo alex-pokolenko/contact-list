@@ -3,12 +3,13 @@ import { ContactViewService } from './contacts-view.service';
 import { TableMessagingService } from '../common/ui-components/data-table/table-messaging.service';
 import { takeWhile } from 'rxjs/operators';
 import { DynamicInputsService } from '../contact-form/dynamic-inputs.service';
+import { ContactTableService } from '../contact-table/contact-table.service';
 
 @Component({
   selector: 'app-contacts-view',
   templateUrl: './contacts-view.component.html',
   styleUrls: ['./contacts-view.component.scss'],
-  providers: [ContactViewService, DynamicInputsService]
+  providers: [ContactViewService, DynamicInputsService, ContactTableService]
 })
 export class ContactViewComponent implements OnInit, OnDestroy {
 
@@ -34,7 +35,7 @@ export class ContactViewComponent implements OnInit, OnDestroy {
           this.editRecordModal(row);
         }
     );
-    this.inputs = inputsService.getInputs();
+    inputsService.getInputs().then(inputs => this.inputs = inputs);
   }
 
   ngOnInit() {

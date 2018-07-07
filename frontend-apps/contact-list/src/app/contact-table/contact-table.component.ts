@@ -6,7 +6,7 @@ import { DataTable } from '../common/ui-components/data-table/data-table';
   selector: 'app-contact-table',
   templateUrl: './contact-table.component.html',
   styleUrls: ['./contact-table.component.scss'],
-  providers: [ContactTableService]
+  providers: []
 })
 export class ContactTableComponent implements OnInit {
 

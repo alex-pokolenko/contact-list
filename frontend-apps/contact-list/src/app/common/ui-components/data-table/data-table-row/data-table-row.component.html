@@ -1,3 +1,15 @@
+<td>
+  <button 
+    class="slds-button slds-button_icon slds-button_icon-x-small"
+    (click)="edit(row)"
+    >
+    <app-slds-icon 
+      styling="slds-button__icon"
+      path="/action-sprite/svg/symbols.svg#edit">
+    </app-slds-icon> 
+    <span class="slds-assistive-text">Edit contact</span>
+  </button>
+</td>
 <td [attr.data-label]="column.fieldPath" *ngFor="let column of columns">
   <div class="slds-truncate" title="{{row[column.fieldPath]}}">{{row[column.fieldPath]}}</div>
 </td>

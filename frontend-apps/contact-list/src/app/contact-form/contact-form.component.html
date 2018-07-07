@@ -1,10 +1,12 @@
 <div>
   <form (ngSubmit)="onSubmit()" [formGroup]="form">
-    <div *ngFor="let input of inputs" class="form-row">
+    <div *ngFor="let input of inputs; let i=index" 
+      class="form-row" 
+      [ngClass]="{'float-left': i%2 === 0, 'float-right': i%2 !== 0 }">
       <app-dynamic-input [input]="input" [form]="form"></app-dynamic-input>
     </div>
 
-    <div class="form-row">
+    <div class="form-row float-clear">
       <button type="submit" [disabled]="!form.valid">Save</button>
     </div>
   </form>

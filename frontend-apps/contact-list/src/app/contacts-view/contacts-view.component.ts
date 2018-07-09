@@ -35,7 +35,6 @@ export class ContactViewComponent implements OnInit, OnDestroy {
           this.editRecordModal(row);
         }
     );
-    inputsService.getInputs().then(inputs => this.inputs = inputs);
   }
 
   ngOnInit() {
@@ -66,7 +65,16 @@ export class ContactViewComponent implements OnInit, OnDestroy {
     this.modalOptions.isModalOpen = false;
   }
 
-  editRecordModal($event: any) {
-    this.openModal();
+  /**
+   * Instantiate record modal
+   *
+   * @param {*} [record] record to edit. If not defined, will fallback to new record creation
+   * @memberof ContactViewComponent
+   */
+  editRecordModal(record?: any) {
+    this.inputsService.getInputs(record).then(inputs => {
+      this.inputs = inputs;
+      this.openModal();
+    });
   }
 }

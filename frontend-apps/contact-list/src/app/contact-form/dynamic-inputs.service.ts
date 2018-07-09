@@ -8,34 +8,99 @@ import { ContactTableService } from '../contact-table/contact-table.service';
   providedIn: 'root'
 })
 export class DynamicInputsService {
-  inputs: InputBase<any>[];
+  private fieldsetFields: any;
+  private inputs: InputBase<any>[];
 
   constructor(private contactTableService: ContactTableService) { }
 
-  // TODO: get fields from fieldset
-  async getInputs() {
+  /**
+   * Get inputs for dynamic form
+   *
+   * @param {*} record data that will be used to prepopulate form fields
+   * @returns {Promise<InputBase<any>[]>} promise resolved to array of dynamic form members
+   * @memberof DynamicInputsService
+   */
+  async getInputs(record: any): Promise<InputBase<any>[]> {
+    // if form inputs are already defined, return them right away
+    if (!this.inputs) {
+      // TODO: reduce unnecessary remoting call if columns are already retrieved as table definition
+      this.fieldsetFields = await this.contactTableService.initColumns();
+    }
 
-    const columns = await this.contactTableService.initColumns();
-    console.log(columns);
+    this.inputs = this.initFormFromFieldset(this.fieldsetFields, record);
 
-    this.inputs = [
-
-      new StringInput({
-        key: 'firstName',
-        label: 'First name',
-        value: 'Bombasto',
-        required: true,
-        order: 1
-      }),
-
-      new StringInput({
-        key: 'emailAddress',
-        label: 'Email',
-        type: 'email',
-        order: 2
-      })
-    ];
-
-    return this.inputs.sort((a, b) => a.order - b.order);
+    return this.inputs;
   }
+
+  /**
+   * Initializes form members from fieldset members
+   *
+   * @private
+   * @param {any[]} fieldsetFields array of SFDC fieldSetMembers
+   * @param {*} [record] data that will be used to prepopulate form fields
+   * @returns {InputBase<any>[]} array of dynamic form members
+   * @memberof DynamicInputsService
+   */
+  private initFormFromFieldset(fieldsetFields: any[], record?: any): InputBase<any>[] {
+    const inputs: InputBase<any>[] = [];
+
+    for (const field of fieldsetFields) {
+      // populate Inputs for each fieldset field
+      // set Input options according to fieldsetMember properties
+      inputs.push(
+        this.initInputFromFieldset(
+          field,
+          record && record[field.fieldPath]
+        )
+      );
+    }
+
+    // filter out undefined inputs
+    return inputs.filter(input => input);
+  }
+
+  /**
+   * Initialize form input from fieldset member definition
+   *
+   * @private
+   * @param {*} field fieldsetMember
+   * @param {*} [value] if defined, initial input value
+   * @returns {InputBase<any>} dynamic form member
+   * @memberof DynamicInputsService
+   */
+  private initInputFromFieldset(field: any, value?: any): InputBase<any> {
+    let input: InputBase<any>;
+
+    const genericOptions = {
+      key: field.fieldPath,
+      label: field.label,
+      required: field.dbRequired || field.required
+    };
+
+    switch (field.type) {
+      case 'string':
+        input = new StringInput(Object.assign({}, genericOptions, {
+          type: 'string',
+          value
+        }));
+        break;
+      case 'double':
+        input = new StringInput(Object.assign({}, genericOptions, {
+          type: 'number',
+          value
+        }));
+        break;
+      case 'date':
+        // init date picker
+        break;
+      case 'lookup':
+        // init lookup
+        break;
+      default:
+        break;
+    }
+
+    return input;
+  }
+
 }

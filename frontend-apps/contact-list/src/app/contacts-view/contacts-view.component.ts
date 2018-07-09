@@ -1,24 +1,33 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+
 import { ContactViewService } from './contacts-view.service';
 import { TableMessagingService } from '../common/ui-components/data-table/table-messaging.service';
 import { takeWhile } from 'rxjs/operators';
 import { DynamicInputsService } from '../contact-form/dynamic-inputs.service';
 import { ContactTableService } from '../contact-table/contact-table.service';
+import { ContactFormService } from '../contact-form/contact-form.service';
 
 @Component({
   selector: 'app-contacts-view',
   templateUrl: './contacts-view.component.html',
   styleUrls: ['./contacts-view.component.scss'],
-  providers: [ContactViewService, DynamicInputsService, ContactTableService]
+  providers: [
+    ContactViewService,
+    DynamicInputsService,
+    ContactFormService,
+    ContactTableService
+  ]
 })
 export class ContactViewComponent implements OnInit, OnDestroy {
 
   private isAlive = true;
 
   private isFilterPanelOpen = false;
+  private submitValid = false;
   private modalOptions = {
     isModalOpen: false,
-    headerText: 'Contact'
+    headerText: 'Contact',
+    submitValid: false
   };
 
   private inputs: any[];
@@ -26,13 +35,25 @@ export class ContactViewComponent implements OnInit, OnDestroy {
   constructor(
     private contactViewService: ContactViewService,
     private tableMessagingService: TableMessagingService,
-    private inputsService: DynamicInputsService
+    private inputsService: DynamicInputsService,
+    private formService: ContactFormService
   ) {
     tableMessagingService.rowEditClicked$
       .pipe(takeWhile(() => this.isAlive))
       .subscribe(
         row => {
           this.editRecordModal(row);
+        }
+    );
+
+    // listen to form state
+    formService.formValidated$
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe(
+        isValid => {
+          setTimeout (() => {
+            this.submitValid = isValid;
+         }, 0);
         }
     );
   }
@@ -42,6 +63,7 @@ export class ContactViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    // kill all the subscribtions
     this.isAlive = false;
   }
 
@@ -74,6 +96,7 @@ export class ContactViewComponent implements OnInit, OnDestroy {
   editRecordModal(record?: any) {
     this.inputsService.getInputs(record).then(inputs => {
       this.inputs = inputs;
+      this.modalOptions.submitValid = true;
       this.openModal();
     });
   }

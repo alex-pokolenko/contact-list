@@ -33,7 +33,8 @@
   <app-modal 
     [isOpen]="modalOptions.isModalOpen"
     [headerText]="modalOptions.headerText"
-    (closed)="onClose($event)">
+    (closed)="onClose($event)"
+    [isValid]="submitValid">
     <ng-template #modalContent>
       <!-- place modal body component here -->
       <app-contact-form [inputs]="inputs"></app-contact-form>

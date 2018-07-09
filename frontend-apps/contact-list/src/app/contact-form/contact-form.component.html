@@ -1,5 +1,5 @@
 <div>
-  <form (ngSubmit)="onSubmit()" [formGroup]="form" id="ngForm" #formRef="ngForm">
+  <form (ngSubmit)="onSubmit()" [formGroup]="form" id="ngForm">
     <div *ngFor="let input of inputs; let i=index" 
       class="form-row" 
       [ngClass]="{'float-left': i%2 === 0, 'float-right': i%2 !== 0 }">
@@ -7,9 +7,9 @@
     </div>
   </form>
 
-  <div class="form-row float-clear">
-    <button (click)="form.ngSubmit.emit()" [disabled]="!form.valid">Save</button>
-  </div>
+  <!-- <div class="form-row float-clear">
+    <button type="submit" form="ngForm" [disabled]="!form.valid">Save</button>
+  </div> -->
 
   <div *ngIf="payLoad" class="form-row">
     <strong>Saved the following values</strong><br>{{payLoad}}

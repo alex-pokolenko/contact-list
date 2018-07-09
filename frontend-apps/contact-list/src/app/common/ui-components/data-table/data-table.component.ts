@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TableMessagingService } from './table-messaging.service';
 import { DataTable } from './data-table';
 
 @Component({
@@ -11,9 +10,23 @@ export class DataTableComponent implements OnInit {
 
   @Input() table: DataTable;
 
+  private sortingKey: string;
+  private isReverse = false;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  /**
+   * Define table order
+   *
+   * @param {string} fieldPath field to order by
+   * @memberof DataTableComponent
+   */
+  sort(fieldPath: string): void {
+    this.isReverse = fieldPath === this.sortingKey ? !this.isReverse : false;
+    this.sortingKey = fieldPath;
   }
 
 }

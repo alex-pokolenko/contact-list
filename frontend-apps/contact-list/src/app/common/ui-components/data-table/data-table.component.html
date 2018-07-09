@@ -2,15 +2,30 @@
   <thead>
     <tr class="slds-text-title_caps">
       <th scope="col" class="slds-cell-shrink"></th>
-      <th scope="col" *ngFor="let column of table.columns">
-        <div class="slds-truncate" title="{{column.label}}">{{column.label}}</div>
+      <th class="slds-is-sortable" scope="col" 
+        *ngFor="let column of table.columns" 
+        (click)="sort(column.fieldPath)">
+        <a class="slds-th__action slds-text-link_reset" href="javascript:void(0);" role="button" tabindex="-1">
+            <span class="slds-assistive-text">Sort by: </span>
+            <div class="slds-truncate" title="{{column.label}}">{{column.label}}</div>
+            <div class="slds-icon_container" *ngIf="column.fieldPath === sortingKey">
+              <app-slds-icon *ngIf="!isReverse"
+                styling="slds-icon slds-icon_x-small slds-icon-text-default slds-is-sortable__icon"
+                path="/utility-sprite/svg/symbols.svg#arrowdown">
+              </app-slds-icon>
+              <app-slds-icon *ngIf="isReverse"
+                styling="slds-icon slds-icon_x-small slds-icon-text-default slds-is-sortable__icon"
+                path="/utility-sprite/svg/symbols.svg#arrowup">
+              </app-slds-icon> 
+            </div>
+          </a>
       </th>
     </tr>
   </thead>
   <tbody>
     <!-- table-row-component uses attribute selector to eliminate wrapping tag-->
     <tr 
-      *ngFor="let row of table.rows" 
+      *ngFor="let row of table.rows | orderBy: sortingKey : isReverse"
       app-data-table-row
       [columns]="table.columns"
       [row]="row">

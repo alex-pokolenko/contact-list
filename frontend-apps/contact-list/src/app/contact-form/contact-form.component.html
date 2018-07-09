@@ -1,15 +1,15 @@
 <div>
-  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <form (ngSubmit)="onSubmit()" [formGroup]="form" id="ngForm" #formRef="ngForm">
     <div *ngFor="let input of inputs; let i=index" 
       class="form-row" 
       [ngClass]="{'float-left': i%2 === 0, 'float-right': i%2 !== 0 }">
       <app-dynamic-input [input]="input" [form]="form"></app-dynamic-input>
     </div>
-
-    <div class="form-row float-clear">
-      <button type="submit" [disabled]="!form.valid">Save</button>
-    </div>
   </form>
+
+  <div class="form-row float-clear">
+    <button (click)="form.ngSubmit.emit()" [disabled]="!form.valid">Save</button>
+  </div>
 
   <div *ngIf="payLoad" class="form-row">
     <strong>Saved the following values</strong><br>{{payLoad}}

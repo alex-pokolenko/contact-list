@@ -13,6 +13,7 @@ import { InputControlService } from './input-control.service';
 export class ContactFormComponent implements OnInit {
 
   @Input() inputs: InputBase<any>[] = [];
+
   form: FormGroup;
   payLoad = '';
 

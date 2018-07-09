@@ -91,7 +91,10 @@ export class DynamicInputsService {
         }));
         break;
       case 'date':
-        // init date picker
+        input = new StringInput(Object.assign({}, genericOptions, {
+          type: 'date',
+          value
+        }));
         break;
       case 'lookup':
         // init lookup

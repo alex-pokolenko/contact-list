@@ -55,6 +55,14 @@ export class DynamicInputsService {
       );
     }
 
+    // store record Id as a hidden input on form
+    inputs.push(new StringInput({
+      key: 'Id',
+      type: 'hidden',
+      required: false,
+      value: record && record.Id
+    }));
+
     // filter out undefined inputs
     return inputs.filter(input => input);
   }

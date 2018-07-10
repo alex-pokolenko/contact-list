@@ -29,7 +29,7 @@ export class ContactTableService {
   mapFields(contacts: any, columns: any): any {
     return contacts.map(contact => {
       const row = {
-        id: contact.Id
+        Id: contact.Id
       };
       for (const column of columns) {
         const path = column.fieldPath.split('.');

@@ -8,7 +8,10 @@ public class ContactListProvider implements ProviderInterface {
         result = ContactListService.initColumns();
       }
       when 'getRecords' {
-        result = ContactListService.getRecords();
+        result = ContactListService.getRecords(params);
+      }
+      when 'saveRecord' {
+        result = ContactListService.saveRecord(params);
       }
     }
 

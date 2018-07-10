@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-contact-filter',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./contact-filter.component.scss']
 })
 export class ContactFilterComponent implements OnInit {
+
+  @Input() formId: string;
 
   constructor() { }
 

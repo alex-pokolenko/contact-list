@@ -1,4 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { takeWhile } from 'rxjs/operators';
+
 import { ContactTableService } from './contact-table.service';
 import { DataTable } from '../common/ui-components/data-table/data-table';
 
@@ -8,26 +10,41 @@ import { DataTable } from '../common/ui-components/data-table/data-table';
   styleUrls: ['./contact-table.component.scss'],
   providers: []
 })
-export class ContactTableComponent implements OnInit {
+export class ContactTableComponent implements OnInit, OnDestroy {
 
   @Output() editRecord = new EventEmitter();
+
+  private isAlive = true;
 
   table = new DataTable();
 
   constructor(
     private contactTableService: ContactTableService
-  ) { }
+  ) {
+    this.subscribeToTableData();
+  }
 
   ngOnInit() {
-    this.getData();
+    // request records from server. Result will be broadcasted by tableDataChanged$
+    this.contactTableService.getRecords();
   }
 
-  private async getData(): Promise<any> {
-    this.table.columns = await this.contactTableService.initColumns();
-    const contacts = await this.contactTableService.getRecords();
-
-    this.table.rows = this.contactTableService.mapFields(contacts, this.table.columns);
-    console.log(this.table.rows);
+  ngOnDestroy() {
+    // kill all the subscribtions
+    this.isAlive = false;
   }
+
+  /**
+   * Subscribe to changes in table data
+   *
+   * @memberof ContactTableComponent
+   */
+  subscribeToTableData(): void {
+    this.contactTableService.tableDataChanged$
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe(
+        table => this.table = table
+      );
+    }
 
 }

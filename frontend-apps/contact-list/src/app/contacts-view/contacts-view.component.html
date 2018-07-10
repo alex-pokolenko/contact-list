@@ -34,11 +34,12 @@
     [isOpen]="modalOptions.isModalOpen"
     [headerText]="modalOptions.headerText"
     (closed)="onClose($event)"
+    [formId]="editFormId"
     [isValid]="submitValid">
     <ng-template #modalContent>
       <!-- place modal body component here -->
       <app-contact-form 
-        [formId]="'editForm'" 
+        [formId]="editFormId" 
         [inputs]="modalInputs"
         ></app-contact-form>
     </ng-template>
@@ -55,9 +56,9 @@
       <h2 class="slds-panel__header-title slds-text-heading_small">Filter Contacts</h2>
     </div>
     <div class="slds-panel__body">
-      <app-contact-filter>
+      <app-contact-filter [formId]="filterFormId">
         <app-contact-form 
-          [formId]="'filterForm'" 
+          [formId]="filterFormId" 
           [bypassRequired]="true" 
           [inputs]="filterInputs">
         </app-contact-form>

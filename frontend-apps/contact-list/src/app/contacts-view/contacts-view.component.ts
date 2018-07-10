@@ -59,12 +59,18 @@ export class ContactViewComponent implements OnInit, OnDestroy {
     this.isAlive = false;
   }
 
-  subscribeToForm() {
+  /**
+   * Subscribe to form events
+   *
+   * @memberof ContactViewComponent
+   */
+  subscribeToForm(): void {
     // listen to form state
     this.formService.formValidated$
       .pipe(takeWhile(() => this.isAlive))
       .subscribe(
         isValid => {
+          // timeout is a workaround to update binding properly
           setTimeout (() => {
             this.submitValid = isValid;
          }, 0);
@@ -75,16 +81,32 @@ export class ContactViewComponent implements OnInit, OnDestroy {
     this.formService.formValueSubmitted$
       .pipe(takeWhile(() => this.isAlive))
       .subscribe(
-        value => {
-          // save on SFDC side
-          console.log(value);
-          this.contactViewService
-            .saveRecord(value)
-            .then((result) => {
-              console.log(result);
-            });
+        form => {
+          this.contactViewService.processForm(form);
         }
       );
+  }
+
+  /**
+   * Id to be used for record Edit form
+   *
+   * @readonly
+   * @type {string}
+   * @memberof ContactViewService
+   */
+  get editFormId(): string {
+    return this.contactViewService.editFormId;
+  }
+
+  /**
+   * Id to be used for filter form
+   *
+   * @readonly
+   * @type {string}
+   * @memberof ContactViewService
+   */
+  get filterFormId(): string {
+    return this.contactViewService.filterFormId;
   }
 
   /**
@@ -120,6 +142,11 @@ export class ContactViewComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Initialize filter panel
+   *
+   * @memberof ContactViewComponent
+   */
   openFilterPanel() {
     if (!this.filterInputs) {
       this.inputsService.getInputs(undefined).then(inputs => {

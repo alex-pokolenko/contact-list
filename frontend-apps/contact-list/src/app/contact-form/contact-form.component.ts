@@ -40,6 +40,9 @@ export class ContactFormComponent implements OnInit {
 
   onSubmit() {
     // broadcast form value to outer components
-    this.formService.setFormValue(this.form.value);
+    this.formService.setFormValue({
+      id: this.formId,
+      value: this.form.value
+    });
   }
 }

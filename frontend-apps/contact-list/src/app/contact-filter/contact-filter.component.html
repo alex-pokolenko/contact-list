@@ -1,1 +1,24 @@
+<div class="slds-grid slds-grid_reverse">
+  <div class="slds-col slds-size_1-of-5">
+    <div class="slds-button-group" role="group">
+      <button 
+        class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-border"
+        type="submit" [attr.form]="formId">
+        <app-slds-icon 
+          styling="slds-button__icon"
+          path="/utility-sprite/svg/symbols.svg#check">
+        </app-slds-icon> 
+        <span class="slds-assistive-text">Apply filter</span>
+      </button>
+      <button 
+        class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-border">
+        <app-slds-icon 
+          styling="slds-button__icon"
+          path="/utility-sprite/svg/symbols.svg#refresh">
+        </app-slds-icon> 
+        <span class="slds-assistive-text">Reset filter</span>
+      </button>
+    </div>
+  </div>
+</div>
 <ng-content></ng-content>

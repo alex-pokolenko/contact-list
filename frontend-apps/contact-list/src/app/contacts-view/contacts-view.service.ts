@@ -8,4 +8,11 @@ export class ContactViewService {
     private sfdcService: SfdcRemotingService
   ) { }
 
+  async saveRecord(record: any): Promise<any[]> {
+    return await this.sfdcService.remoteRequest(
+      'ContactListProvider',
+      'saveRecord'
+    );
+  }
+
 }

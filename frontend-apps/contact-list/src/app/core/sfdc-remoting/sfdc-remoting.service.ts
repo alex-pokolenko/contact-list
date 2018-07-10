@@ -25,6 +25,14 @@ export class SfdcRemotingService {
     }
   }
 
+  /**
+   * Parse raw response from SFDC
+   *
+   * @private
+   * @param {*} response result of remote action in JSON
+   * @returns {*} parsed object
+   * @memberof SfdcRemotingService
+   */
   private parseSfdcJson(response): any {
     let result = {};
     try {
@@ -38,6 +46,15 @@ export class SfdcRemotingService {
     return result;
   }
 
+  /**
+   * Call remote action from SFDC
+   *
+   * @param {string} serviceName name of service to be called
+   * @param {string} methodName name of service method to be called
+   * @param {*} [params={}] acton parameters
+   * @returns {Promise<any>} async result of remote action
+   * @memberof SfdcRemotingService
+   */
   remoteRequest(serviceName: string, methodName: string, params: any = {}): Promise<any> {
     return new Promise((resolve, reject) => {
       if (this.remotingConfig) {

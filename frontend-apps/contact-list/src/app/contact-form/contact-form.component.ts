@@ -14,6 +14,8 @@ import { ContactFormService } from './contact-form.service';
 export class ContactFormComponent implements OnInit {
 
   @Input() inputs: InputBase<any>[] = [];
+  @Input() formId: string;
+  @Input() bypassRequired: boolean;
 
   form: FormGroup;
 
@@ -23,7 +25,7 @@ export class ContactFormComponent implements OnInit {
   ) {  }
 
   ngOnInit() {
-    this.form = this.inputControlService.toFormGroup(this.inputs);
+    this.form = this.inputControlService.toFormGroup(this.inputs, this.bypassRequired);
 
     // emit form validity. This will allow to maintain submit button outside of form component
     this.formService.setValidity(this.form.valid);

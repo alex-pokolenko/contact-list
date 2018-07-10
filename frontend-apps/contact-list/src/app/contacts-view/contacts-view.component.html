@@ -16,7 +16,7 @@
 
     <button class="slds-button slds-button_brand" (click)="editRecordModal()">New</button>
     <button 
-      (click)="isFilterPanelOpen=!isFilterPanelOpen;" 
+      (click)="openFilterPanel()" 
       [ngClass]="{'slds-is-selected': isFilterPanelOpen}" 
       class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-border">
       <app-slds-icon 
@@ -37,7 +37,10 @@
     [isValid]="submitValid">
     <ng-template #modalContent>
       <!-- place modal body component here -->
-      <app-contact-form [inputs]="inputs"></app-contact-form>
+      <app-contact-form 
+        [formId]="'editForm'" 
+        [inputs]="modalInputs"
+        ></app-contact-form>
     </ng-template>
   </app-modal>
 
@@ -45,13 +48,20 @@
     <app-contact-table></app-contact-table>
   </div>
   <div
+    *ngIf="isFilterPanelOpen"
     [ngClass]="{'slds-is-open': isFilterPanelOpen}"
     class="slds-panel slds-size_medium slds-panel_docked slds-panel_docked-right slds-is-directional" aria-hidden="false">
     <div class="slds-panel__header">
       <h2 class="slds-panel__header-title slds-text-heading_small">Filter Contacts</h2>
     </div>
     <div class="slds-panel__body">
-      <app-contact-filter></app-contact-filter>
+      <app-contact-filter>
+        <app-contact-form 
+          [formId]="'filterForm'" 
+          [bypassRequired]="true" 
+          [inputs]="filterInputs">
+        </app-contact-form>
+      </app-contact-filter>
     </div>
   </div>
 </div>

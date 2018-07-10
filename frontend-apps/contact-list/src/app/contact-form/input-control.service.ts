@@ -7,11 +7,11 @@ import { InputBase } from './input-base';
 export class InputControlService {
   constructor() { }
 
-  toFormGroup(inputs: InputBase<any>[] ) {
+  toFormGroup(inputs: InputBase<any>[], bypassRequired = false) {
     const group: any = {};
 
     inputs.forEach(input => {
-      group[input.key] = input.required
+      group[input.key] = !bypassRequired && input.required
         ? new FormControl(input.value || '', Validators.required) // add validator
         : new FormControl(input.value || '');
     });

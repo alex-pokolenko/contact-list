@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()" [formGroup]="form" id="ngForm">
+<form (ngSubmit)="onSubmit()" [formGroup]="form" [attr.id]="formId">
   <div *ngFor="let input of inputs; let i=index" 
     class="form-row" 
     [ngClass]="{'float-left': i%2 === 0, 'float-right': i%2 !== 0 }">

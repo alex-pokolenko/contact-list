@@ -30,7 +30,8 @@ export class ContactViewComponent implements OnInit, OnDestroy {
     submitValid: false
   };
 
-  private inputs: any[];
+  private modalInputs: any[];
+  private filterInputs: any[];
 
   constructor(
     private contactViewService: ContactViewService,
@@ -114,9 +115,19 @@ export class ContactViewComponent implements OnInit, OnDestroy {
    */
   editRecordModal(record?: any) {
     this.inputsService.getInputs(record).then(inputs => {
-      this.inputs = inputs;
-      this.modalOptions.submitValid = true;
+      this.modalInputs = inputs;
       this.openModal();
     });
+  }
+
+  openFilterPanel() {
+    if (!this.filterInputs) {
+      this.inputsService.getInputs(undefined).then(inputs => {
+        this.filterInputs = inputs;
+        this.isFilterPanelOpen = !this.isFilterPanelOpen;
+      });
+    } else {
+      this.isFilterPanelOpen = !this.isFilterPanelOpen;
+    }
   }
 }

@@ -5,8 +5,7 @@
     <title>ContactsPage</title>
     <base href="/apex/ContactsPage/"/>
   
-    <link rel="stylesheet" href="https://localhost:4200/styles.css"/>
-    <link rel="stylesheet" href="https://localhost:4200/assets/styles/salesforce-lightning-design-system.min.css"/>
+    <link rel="stylesheet" href="{!URLFOR($Resource.contactList, '/assets/styles/salesforce-lightning-design-system.min.css')}"/>
 
     <!-- SLDS is served from app assets. This path can point to $Asset.SLDS as an alternative -->
     <script type="text/javascript">
@@ -21,10 +20,10 @@
   </head>
   <body class="slds-scope">
     <app-root></app-root>
-    <script type="text/javascript" src="https://localhost:4200/runtime.js"></script>
-    <script type="text/javascript" src="https://localhost:4200/polyfills.js"></script>
-    <script type="text/javascript" src="https://localhost:4200/styles.js"></script>
-    <script type="text/javascript" src="https://localhost:4200/vendor.js"></script>
-    <script type="text/javascript" src="https://localhost:4200/main.js"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.contactList, '/runtime.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.contactList, '/polyfills.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.contactList, '/styles.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.contactList, '/vendor.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.contactList, '/main.js')}"></script>
   </body>
 </apex:page>

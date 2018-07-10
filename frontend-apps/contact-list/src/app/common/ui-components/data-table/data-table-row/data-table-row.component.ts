@@ -17,7 +17,7 @@ export class DataTableRowComponent implements OnInit {
 
   }
 
-  private edit(row: any): void {
+  edit(row: any): void {
     // fire event
     this.messagingService.edit(row);
   }

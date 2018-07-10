@@ -22,16 +22,16 @@ export class ContactViewComponent implements OnInit, OnDestroy {
 
   private isAlive = true;
 
-  private isFilterPanelOpen = false;
-  private submitValid = false;
-  private modalOptions = {
+  isFilterPanelOpen = false;
+  submitValid = false;
+  modalOptions = {
     isModalOpen: false,
     headerText: 'Contact',
     submitValid: false
   };
 
-  private modalInputs: any[];
-  private filterInputs: any[];
+  modalInputs: any[];
+  filterInputs: any[];
 
   constructor(
     private contactViewService: ContactViewService,

@@ -10,8 +10,8 @@ export class DataTableComponent implements OnInit {
 
   @Input() table: DataTable;
 
-  private sortingKey: string;
-  private isReverse = false;
+  sortingKey: string;
+  isReverse = false;
 
   constructor() { }
 

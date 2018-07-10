@@ -12,7 +12,7 @@ export class ContactTableComponent implements OnInit {
 
   @Output() editRecord = new EventEmitter();
 
-  private table = new DataTable();
+  table = new DataTable();
 
   constructor(
     private contactTableService: ContactTableService

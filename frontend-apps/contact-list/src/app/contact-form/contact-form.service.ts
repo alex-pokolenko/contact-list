@@ -7,15 +7,38 @@ import { Subject, Observable } from 'rxjs';
 })
 export class ContactFormService {
 
-  private subject = new Subject<any>();
+  private validitySubject = new Subject<boolean>();
+  private formValueSubject = new Subject<any>();
 
   constructor() { }
 
-  get formValidated$(): Observable<any> {
-    return this.subject.asObservable();
+  /**
+   * Observable that will broadcast form validity
+   *
+   * @readonly
+   * @type {Observable<boolean>}
+   * @memberof ContactFormService
+   */
+  get formValidated$(): Observable<boolean> {
+    return this.validitySubject.asObservable();
   }
 
-  setValidity(row: any): void {
-    this.subject.next(row);
+  setValidity(isValid: boolean): void {
+    this.validitySubject.next(isValid);
+  }
+
+  /**
+   * Observable that will broadcast form value once form is submitted
+   *
+   * @readonly
+   * @type {Observable<any>}
+   * @memberof ContactFormService
+   */
+  get formValueSubmitted$(): Observable<any> {
+    return this.formValueSubject.asObservable();
+  }
+
+  setFormValue(value: any): void {
+    this.formValueSubject.next(value);
   }
 }

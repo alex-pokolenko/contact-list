@@ -11,9 +11,11 @@ export class InputControlService {
     const group: any = {};
 
     inputs.forEach(input => {
-      group[input.key] = input.required ? new FormControl(input.value || '', Validators.required)
-                                        : new FormControl(input.value || '');
+      group[input.key] = input.required
+        ? new FormControl(input.value || '', Validators.required) // add validator
+        : new FormControl(input.value || '');
     });
+
     return new FormGroup(group);
   }
 }

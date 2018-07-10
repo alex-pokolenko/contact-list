@@ -16,15 +16,14 @@ export class ContactFormComponent implements OnInit {
   @Input() inputs: InputBase<any>[] = [];
 
   form: FormGroup;
-  payLoad = '';
 
   constructor(
-    private qcs: InputControlService,
+    private inputControlService: InputControlService,
     private formService: ContactFormService
   ) {  }
 
   ngOnInit() {
-    this.form = this.qcs.toFormGroup(this.inputs);
+    this.form = this.inputControlService.toFormGroup(this.inputs);
 
     // emit form validity. This will allow to maintain submit button outside of form component
     this.formService.setValidity(this.form.valid);
@@ -38,6 +37,7 @@ export class ContactFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.payLoad = JSON.stringify(this.form.value);
+    // broadcast form value to outer components
+    this.formService.setFormValue(this.form.value);
   }
 }

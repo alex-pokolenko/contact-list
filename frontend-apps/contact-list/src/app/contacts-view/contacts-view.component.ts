@@ -44,18 +44,9 @@ export class ContactViewComponent implements OnInit, OnDestroy {
         row => {
           this.editRecordModal(row);
         }
-    );
+      );
 
-    // listen to form state
-    formService.formValidated$
-      .pipe(takeWhile(() => this.isAlive))
-      .subscribe(
-        isValid => {
-          setTimeout (() => {
-            this.submitValid = isValid;
-         }, 0);
-        }
-    );
+    this.subscribeToForm();
   }
 
   ngOnInit() {
@@ -65,6 +56,34 @@ export class ContactViewComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // kill all the subscribtions
     this.isAlive = false;
+  }
+
+  subscribeToForm() {
+    // listen to form state
+    this.formService.formValidated$
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe(
+        isValid => {
+          setTimeout (() => {
+            this.submitValid = isValid;
+         }, 0);
+        }
+      );
+
+    // listen to form value
+    this.formService.formValueSubmitted$
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe(
+        value => {
+          // save on SFDC side
+          console.log(value);
+          this.contactViewService
+            .saveRecord(value)
+            .then((result) => {
+              console.log(result);
+            });
+        }
+      );
   }
 
   /**

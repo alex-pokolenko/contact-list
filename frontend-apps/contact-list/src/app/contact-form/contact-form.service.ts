@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
+import { FormSubmitResult } from './form-submit-result';
 
 
 @Injectable({
@@ -32,14 +33,14 @@ export class ContactFormService {
    * Observable that will broadcast form value once form is submitted
    *
    * @readonly
-   * @type {Observable<any>}
+   * @type {Observable<FormSubmitResult>}
    * @memberof ContactFormService
    */
-  get formValueSubmitted$(): Observable<any> {
+  get formValueSubmitted$(): Observable<FormSubmitResult> {
     return this.formValueSubject.asObservable();
   }
 
-  setFormValue(value?: any): void {
+  setFormValue(value?: FormSubmitResult): void {
     this.formValueSubject.next(value);
   }
 

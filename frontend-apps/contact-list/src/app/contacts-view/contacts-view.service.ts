@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SfdcRemotingService } from '../core/sfdc-remoting/sfdc-remoting.service';
 import { ContactTableService } from '../contact-table/contact-table.service';
+import { FormSubmitResult } from '../contact-form/form-submit-result';
 
 const EDIT_FORM_ID = 'editForm';
 const FILTER_FORM_ID = 'filterForm';
@@ -38,11 +39,11 @@ export class ContactViewService {
   /**
    * Handler for the form submit subscription
    *
-   * @param {*} [form] submitted form value
+   * @param {FormSubmitResult} [form] submitted form value
    * @returns {Promise<any>}
    * @memberof ContactViewService
    */
-  async processForm(form?: any): Promise<any> {
+  async processForm(form?: FormSubmitResult): Promise<any> {
     let result: Promise<any>;
 
     if (!form) {

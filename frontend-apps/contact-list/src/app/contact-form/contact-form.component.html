@@ -1,7 +1,7 @@
-<form (ngSubmit)="onSubmit()" [formGroup]="form" [attr.id]="formId">
-  <div *ngFor="let input of inputs; let i=index" 
-    class="form-row" 
-    [ngClass]="{'float-left': i%2 === 0, 'float-right': i%2 !== 0 }">
-    <app-dynamic-input [input]="input" [form]="form"></app-dynamic-input>
+<form (ngSubmit)="onSubmit()" [formGroup]="form" [attr.id]="formId" class="slds-form slds-form_stacked">
+  <!-- <div *ngFor="let input of inputs; let i=index" 
+    [ngClass]="{'float-left': i%2 === 0, 'float-right': i%2 !== 0 }"> -->
+    <div *ngFor="let input of inputs; let i=index">
+      <app-dynamic-input [input]="input" [form]="form"></app-dynamic-input>
   </div>
 </form>

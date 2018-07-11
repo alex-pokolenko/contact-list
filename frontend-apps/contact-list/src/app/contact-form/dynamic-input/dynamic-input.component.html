@@ -1,9 +1,11 @@
-<div [formGroup]="form">
-  <label [attr.for]="input.key">{{input.label}}</label>
+<div [formGroup]="form" class="slds-form-element slds-has-error" [ngClass]="{'slds-has-error': !isValid}">
+  <label class="slds-form-element__label" [attr.for]="input.key">
+    {{input.label}}
+  </label>
 
-  <div [ngSwitch]="input.controlType">
+  <div class="slds-form-element__control" [ngSwitch]="input.controlType">
 
-    <input *ngSwitchCase="'textbox'" [formControlName]="input.key"
+    <input class="slds-input" *ngSwitchCase="'textbox'" [formControlName]="input.key"
             [id]="input.key" [type]="input.type">
 
     <select [id]="input.key" *ngSwitchCase="'dropdown'" [formControlName]="input.key">
@@ -11,6 +13,5 @@
     </select>
 
   </div> 
-
-  <div class="errorMessage" *ngIf="!isValid">{{input.label}} is required</div>
+  <div class="slds-form-element__help" *ngIf="!isValid">This field is required</div>
 </div>

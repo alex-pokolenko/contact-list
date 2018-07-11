@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { TableMessagingService } from '../table-messaging.service';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: '[app-data-table-row]',
   templateUrl: './data-table-row.component.html',
   styleUrls: ['./data-table-row.component.scss']

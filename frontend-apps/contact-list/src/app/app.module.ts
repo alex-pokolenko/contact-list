@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { AppComponent } from './app.component';
 import { UiComponentsModule } from './common/ui-components/ui-components.module';
 import { ContactViewComponent } from './contacts-view/contacts-view.component';
@@ -25,7 +27,8 @@ import { DynamicInputComponent } from './contact-form/dynamic-input/dynamic-inpu
     BrowserModule,
     UiComponentsModule,
     CoreModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

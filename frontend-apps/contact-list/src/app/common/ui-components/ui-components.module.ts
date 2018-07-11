@@ -6,11 +6,13 @@ import { DataTableRowComponent } from './data-table/data-table-row/data-table-ro
 import { ModalComponent } from './modal/modal.component';
 import { TableMessagingService } from './data-table/table-messaging.service';
 import { OrderModule } from 'ngx-order-pipe';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
     CommonModule,
-    OrderModule
+    OrderModule,
+    NgbModule
   ],
   declarations: [
     SldsIconComponent,

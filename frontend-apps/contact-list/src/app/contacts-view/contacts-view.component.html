@@ -56,7 +56,7 @@
       <h2 class="slds-panel__header-title slds-text-heading_small">Filter Contacts</h2>
     </div>
     <div class="slds-panel__body">
-      <app-contact-filter [formId]="filterFormId">
+      <app-contact-filter [formId]="filterFormId" (resetFilter)="resetFilter()">
         <app-contact-form 
           [formId]="filterFormId" 
           [bypassRequired]="true" 

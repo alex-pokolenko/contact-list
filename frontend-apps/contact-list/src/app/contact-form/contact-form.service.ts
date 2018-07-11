@@ -9,6 +9,7 @@ export class ContactFormService {
 
   private validitySubject = new Subject<boolean>();
   private formValueSubject = new Subject<any>();
+  private formResetSubject = new Subject<void>();
 
   constructor() { }
 
@@ -38,7 +39,23 @@ export class ContactFormService {
     return this.formValueSubject.asObservable();
   }
 
-  setFormValue(value: any): void {
+  setFormValue(value?: any): void {
     this.formValueSubject.next(value);
+  }
+
+  /**
+   * Observable that will broadcast a request to reset form
+   *
+   * @readonly
+   * @type {Observable<void>}
+   * @memberof ContactFormService
+   */
+  get formReset$(): Observable<void> {
+    return this.formResetSubject.asObservable();
+  }
+
+  resetForm(): void {
+    this.formResetSubject.next();
+    this.setFormValue();
   }
 }

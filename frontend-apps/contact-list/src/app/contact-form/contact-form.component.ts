@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { takeWhile } from 'rxjs/operators';
 
 import { InputBase } from './input-base';
 import { InputControlService } from './input-control.service';
@@ -11,18 +12,24 @@ import { ContactFormService } from './contact-form.service';
   styleUrls: ['./contact-form.component.scss'],
   providers: [ InputControlService ]
 })
-export class ContactFormComponent implements OnInit {
+export class ContactFormComponent implements OnInit, OnDestroy {
 
   @Input() inputs: InputBase<any>[] = [];
   @Input() formId: string;
   @Input() bypassRequired: boolean;
+
+  isAlive = true;
 
   form: FormGroup;
 
   constructor(
     private inputControlService: InputControlService,
     private formService: ContactFormService
-  ) {  }
+  ) {
+    formService.formReset$
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe(() => this.form.reset());
+  }
 
   ngOnInit() {
     this.form = this.inputControlService.toFormGroup(this.inputs, this.bypassRequired);
@@ -38,6 +45,15 @@ export class ContactFormComponent implements OnInit {
     );
   }
 
+  ngOnDestroy() {
+    this.isAlive = false;
+  }
+
+  /**
+   * Broadcast submitted value to Observers
+   *
+   * @memberof ContactFormComponent
+   */
   onSubmit() {
     // broadcast form value to outer components
     this.formService.setFormValue({

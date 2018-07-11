@@ -157,4 +157,13 @@ export class ContactViewComponent implements OnInit, OnDestroy {
       this.isFilterPanelOpen = !this.isFilterPanelOpen;
     }
   }
+
+  /**
+   * Reset filter form
+   *
+   * @memberof ContactViewComponent
+   */
+  resetFilter(): void {
+    this.formService.resetForm();
+  }
 }

@@ -38,21 +38,23 @@ export class ContactViewService {
   /**
    * Handler for the form submit subscription
    *
-   * @param {*} form submitted form value
+   * @param {*} [form] submitted form value
    * @returns {Promise<any>}
    * @memberof ContactViewService
    */
-  async processForm(form: any): Promise<any> {
+  async processForm(form?: any): Promise<any> {
     let result: Promise<any>;
 
-    if (form.id === EDIT_FORM_ID) {
+    if (!form) {
+      result = await this.contactTableService.getRecords();
+    } else if (form.id === FILTER_FORM_ID) {
+      result = await this.contactTableService.getRecords(form.value);
+    } else if (form.id === EDIT_FORM_ID) {
       result = await this.sfdcService.remoteRequest(
         'ContactListProvider',
         'saveRecord',
         form.value
       );
-    } else if (form.id === FILTER_FORM_ID) {
-      result = await this.contactTableService.getRecords(form.value);
     }
   }
 

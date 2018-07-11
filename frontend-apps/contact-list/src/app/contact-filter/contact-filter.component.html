@@ -1,8 +1,11 @@
 <div class="slds-grid slds-grid_reverse">
   <div class="slds-col slds-size_1-of-5">
     <div class="slds-button-group" role="group">
+      <!-- Apply filter button acts as form submit. Submission result is handled in contacts-view component observer -->
       <button 
         class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-border"
+        [ngClass]="{'slds-is-selected': isFiltered}"
+        (click)="isFiltered=true;"
         type="submit" [attr.form]="formId">
         <app-slds-icon 
           styling="slds-button__icon"
@@ -11,7 +14,8 @@
         <span class="slds-assistive-text">Apply filter</span>
       </button>
       <button 
-        class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-border">
+        class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-border"
+        (click)="reset()">
         <app-slds-icon 
           styling="slds-button__icon"
           path="/utility-sprite/svg/symbols.svg#refresh">

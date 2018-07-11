@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-contact-filter',
@@ -8,10 +8,18 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ContactFilterComponent implements OnInit {
 
   @Input() formId: string;
+  @Output() resetFilter = new EventEmitter();
+
+  isFiltered = false;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  reset(): void {
+    this.resetFilter.emit();
+    this.isFiltered = false;
   }
 
 }

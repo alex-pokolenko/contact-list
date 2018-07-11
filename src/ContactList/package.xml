@@ -5,6 +5,7 @@
         <members>ContactListController</members>
         <members>ContactListProvider</members>
         <members>ContactListService</members>
+        <members>DynamicSObjectService</members>
         <members>HelperService</members>
         <members>ProviderInterface</members>
         <name>ApexClass</name>

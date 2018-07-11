@@ -95,7 +95,7 @@ export class DynamicInputsService {
       case 'double':
         input = new StringInput(Object.assign({}, genericOptions, {
           type: 'number',
-          value
+          value: value ? value.toString() : value
         }));
         break;
       case 'date':

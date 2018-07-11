@@ -17,4 +17,8 @@ function deploy {
   build && sfdx force:mdapi:deploy -d ./src/ContactList -w 10 -u contact-list
 }
 
+function deploy-fast {
+  sfdx force:mdapi:deploy -d ./src/ContactList -w 10 -u contact-list
+}
+
 "$@"

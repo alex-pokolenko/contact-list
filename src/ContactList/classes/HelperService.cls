@@ -22,4 +22,23 @@ public class HelperService {
 
     return fieldSetMembers;
   }
+
+  /**
+   * Get map of sObject fields
+   * @param  sObjectType sname of sObject
+   * @return             map of sObject fields
+   */
+  public static Map<String, SObjectField> getSobjectFields(String sObjectType) {
+    Map<String, SObjectField> fieldMap;
+
+    List<DescribeSObjectResult> describeResults = Schema.describeSObjects(
+      new List<String> {sObjectType}
+    );
+
+    if (!describeResults.isEmpty()) {
+      fieldMap = describeResults[0].fields.getMap();
+    }
+
+    return fieldMap;
+  }
 }

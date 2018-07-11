@@ -27,14 +27,26 @@ public class ContactListService {
 
   private static String getFilterQuery(Map<String, Object> filterMap) {
     String filter = '';
+    Date dateValue;
+
+    Map<String, SObjectField> sObjectFieldMap = HelperService.getSobjectFields(OBJECT_TYPE);
+
     for (String fieldName : filterMap.keySet()) {
       String fieldValue = (String)filterMap.get(fieldName);
 
-      if (!String.isBlank(fieldValue))
+      // TODO: fieldDescribe == NULL is a temporary workaround for relationship fields like Account.Name
+      Schema.DescribeFieldResult fieldDescribe = sObjectFieldMap.containsKey(fieldName) ? sObjectFieldMap.get(fieldName).getDescribe() : NULL;
+      if (!String.isBlank(fieldValue) && (fieldDescribe == NULL || fieldDescribe.isFilterable()))
         // TODO: LIKE will only work for string types. Need to cast types properly.
+        if (fieldDescribe == NULL || fieldDescribe.getType() == DisplayType.STRING) {
+          System.debug(fieldName);
+          System.debug(fieldValue);
         filter += fieldName + ' LIKE \'%' + String.escapeSingleQuotes(fieldValue) + '%\' AND ';
-
-        // filter += fieldName + ' = \'' + String.escapeSingleQuotes(fieldValue) + '\' AND ';
+        }
+        else if (fieldDescribe.getType() == DisplayType.DATE) {
+          dateValue = Date.valueOf(fieldValue);
+          filter += fieldName + ' = :dateValue AND ';
+        }
     }
 
     if (!String.isBlank(filter)) {
@@ -45,15 +57,10 @@ public class ContactListService {
   }
 
   public static Database.UpsertResult saveRecord(String jsonRecord) {
-    Map<String, Object> recordFieldsMap = (Map<String, Object>) JSON.deserializeUntyped(jsonRecord);
+    Map<String, Object> recordMap = (Map<String, Object>) JSON.deserializeUntyped(jsonRecord);
+    System.debug(recordMap);
 
-    Schema.SObjectType targetType = Schema.getGlobalDescribe().get(OBJECT_TYPE);
-    SObject targetRecord = targetType.newSObject();
-
-    for (String fieldName : recordFieldsMap.keySet()) {
-      Object fieldValue = recordFieldsMap.get(fieldName);
-      targetRecord.put(fieldName, fieldValue);
-    }
+    SObject targetRecord = DynamicSObjectService.createSObjectRecord(recordMap, OBJECT_TYPE);
 
     Database.UpsertResult saveResult = Database.upsert(targetRecord);
 

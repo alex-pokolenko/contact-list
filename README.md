@@ -11,7 +11,7 @@ Project uses SFDX CLI and bash script for deployment.
 - to build angular application and copy it to the static resource run
 `.build.sh build`
 
-- to deploy source run 
+- or, to build and deploy source run 
 `./build.sh deploy`
 
 -to retrieve run 

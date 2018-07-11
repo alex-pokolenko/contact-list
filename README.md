@@ -10,7 +10,6 @@ Project uses SFDX CLI and bash script for deployment.
 - create an empty `ContactList` package in your dev org
 
 - to build angular application and copy it to the static resource run
-
 `.build.sh build`
 
 - to deploy source run 

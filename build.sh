@@ -4,8 +4,17 @@ function retrieve {
   rm ./src/unpackaged.zip
 }
 
+function build {
+  #build angular app
+  (cd frontend-apps/contact-list && ng build)
+  #remove static resource
+  rm src/ContactList/staticresources/contactList.resource
+  #zip new build into static resource
+  (cd frontend-apps/contact-list/dist/contact-list && zip -r -X ../../../../src/ContactList/staticresources/contactList.resource *)
+}
+
 function deploy {
-  sfdx force:mdapi:deploy -d ./src/ContactList -w 10 -u contact-list
+  build && sfdx force:mdapi:deploy -d ./src/ContactList -w 10 -u contact-list
 }
 
 "$@"

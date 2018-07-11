@@ -4,7 +4,6 @@ Project uses SFDX CLI and bash script for deployment.
 - make sure you have SFDX CLI installed
 
 - to authorize dev org run 
-
 `sfdx force:auth:web:login -a contact-list`
 
 - create an empty `ContactList` package in your dev org

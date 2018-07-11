@@ -2,6 +2,11 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.4.
 
+## Prerequisites
+
+Make sure you have Node.js, npm and Angular CLI installed.
+Run `npm i` to install project dependencies.
+
 ## Development server
 
 Run `nmp run start` (live reload) or `npm run hmr` (hot reload) for a dev server.

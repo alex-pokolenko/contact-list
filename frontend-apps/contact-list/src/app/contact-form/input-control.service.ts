@@ -7,7 +7,7 @@ import { InputBase } from './input-base';
 export class InputControlService {
   constructor() { }
 
-  toFormGroup(inputs: InputBase<any>[], bypassRequired = false) {
+  toFormGroup(inputs: InputBase<any>[], bypassRequired = false): FormGroup {
     const group: any = {};
 
     inputs.forEach(input => {

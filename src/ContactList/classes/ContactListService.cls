@@ -9,6 +9,8 @@ public class ContactListService {
   }
 
   public static List<sObject> getRecords(String filter) {
+    /* TODO: limit records numper by implementing server-side pagination */
+
     String queryFilter = getFilterQuery(
       (Map<String, Object>)JSON.deserializeUntyped(filter)
     );

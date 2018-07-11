@@ -1,0 +1,17 @@
+<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+  <span class="slds-icon_container slds-icon-utility-event slds-input__icon slds-input__icon_right">
+    <!-- <ngl-icon icon="event" type="default" size="x-small"></ngl-icon> -->
+  </span>
+  <input 
+    class="slds-input" 
+    placeholder="yyyy-mm-dd"
+    name="dp"
+    ngbDatepicker 
+    [ngModel]="date"
+    (ngModelChange)="dateChanged($event)"
+    #d="ngbDatepicker" 
+    (click)="d.toggle()" 
+    (clickOutside)="d.close()" 
+    [exclude]="'ngb-datepicker'" 
+    [excludeBeforeClick]="true" />
+</div>

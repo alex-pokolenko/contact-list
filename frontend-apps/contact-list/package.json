@@ -26,6 +26,7 @@
     "@salesforce-ux/design-system": "^2.6.1",
     "bootstrap": "^4.1.1",
     "core-js": "^2.4.1",
+    "ng-click-outside": "^4.0.0",
     "ngx-order-pipe": "^2.0.1",
     "rxjs": "^6.2.1",
     "zone.js": "^0.8.26"

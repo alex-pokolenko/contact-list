@@ -16,7 +16,7 @@
     <app-lookup [id]="input.key" *ngSwitchCase="'lookup'" class="slds-form-element__control" [formControlName]="input.key"
       [selection]="input.value"
       (selectionChange)="form.controls[input.key].setValue($event.Id)"
-      [objectName]="'Account'"
+      [objectName]="input.relatedObjectType"
       [lookupField]="'Name'"
       (onRemove)="input.value=null">
     </app-lookup>

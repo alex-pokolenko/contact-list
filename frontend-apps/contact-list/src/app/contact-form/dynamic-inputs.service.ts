@@ -111,7 +111,8 @@ export class DynamicInputsService {
         // init lookup
         input = new LookupInput(Object.assign({}, genericOptions, {
           type: 'reference',
-          value
+          value,
+          relatedObjectType: field.relatedObjectType
         }));
         break;
       case 'picklist':

@@ -24,13 +24,18 @@ public class ContactListService {
       if (!String.isBlank(fieldValue) && (fieldDescribe == NULL || fieldDescribe.isFilterable()))
         // TODO: LIKE will only work for string types. Need to cast types properly.
         if (fieldDescribe == NULL || fieldDescribe.getType() == DisplayType.STRING) {
-          System.debug(fieldName);
-          System.debug(fieldValue);
           filter += fieldName + ' LIKE \'%' + String.escapeSingleQuotes(fieldValue) + '%\' AND ';
-        }
+        } 
         else if (fieldDescribe.getType() == DisplayType.DATE) {
+          // TODO: this binding will not work for more than one Date field
           dateValue = Date.valueOf(fieldValue);
           filter += fieldName + ' = :dateValue AND ';
+        } 
+        else if (fieldDescribe.getType() == DisplayType.REFERENCE) {
+          filter += fieldName + ' = \'' + String.escapeSingleQuotes(fieldValue) + '\' AND ';
+        } 
+        else if (fieldDescribe.getType() == DisplayType.DOUBLE || fieldDescribe.getType() == DisplayType.INTEGER) {
+          filter += fieldName + ' = ' + String.escapeSingleQuotes(fieldValue) + ' AND ';
         }
     }
 
@@ -59,37 +64,6 @@ public class ContactListService {
 
     query += fields + ', Id FROM ' + OBJECT_TYPE + queryFilter;
     return Database.query(query);
-  }
-
-  private static String getFilterQuery(Map<String, Object> filterMap) {
-    String filter = '';
-    Date dateValue;
-
-    Map<String, SObjectField> sObjectFieldMap = HelperService.getSobjectFields(OBJECT_TYPE);
-
-    for (String fieldName : filterMap.keySet()) {
-      String fieldValue = (String)filterMap.get(fieldName);
-
-      // TODO: fieldDescribe == NULL is a temporary workaround for relationship fields like Account.Name
-      Schema.DescribeFieldResult fieldDescribe = sObjectFieldMap.containsKey(fieldName) ? sObjectFieldMap.get(fieldName).getDescribe() : NULL;
-      if (!String.isBlank(fieldValue) && (fieldDescribe == NULL || fieldDescribe.isFilterable()))
-        // TODO: LIKE will only work for string types. Need to cast types properly.
-        if (fieldDescribe == NULL || fieldDescribe.getType() == DisplayType.STRING) {
-          System.debug(fieldName);
-          System.debug(fieldValue);
-          filter += fieldName + ' LIKE \'%' + String.escapeSingleQuotes(fieldValue) + '%\' AND ';
-        }
-        else if (fieldDescribe.getType() == DisplayType.DATE) {
-          dateValue = Date.valueOf(fieldValue);
-          filter += fieldName + ' = :dateValue AND ';
-        }
-    }
-
-    if (!String.isBlank(filter)) {
-      filter = ' WHERE ' + filter.removeEnd(' AND ');
-    }
-
-    return filter;
   }
 
   public static Database.UpsertResult saveRecord(String jsonRecord) {

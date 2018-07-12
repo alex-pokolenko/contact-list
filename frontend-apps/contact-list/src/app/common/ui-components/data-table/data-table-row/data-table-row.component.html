@@ -11,5 +11,7 @@
   </button>
 </td>
 <td [attr.data-label]="column.fieldPath" *ngFor="let column of columns">
-  <div class="slds-truncate" title="{{row[column.fieldPath]}}">{{row[column.fieldPath]}}</div>
+  <!-- TODO: revise this approach -->
+  <div class="slds-truncate" title="{{row[column.fieldPath]}}" *ngIf="column.type!=='reference'">{{row[column.fieldPath]}}</div>
+  <div class="slds-truncate" title="{{row[column.fieldPath]}}" *ngIf="column.type==='reference' && row[column.fieldPath]">{{row[column.fieldPath]['Name']}}</div>
 </td>

@@ -48,13 +48,13 @@ export class DynamicInputsService {
     for (const field of fieldsetFields) {
       // populate Inputs for each fieldset field
       // set Input options according to fieldsetMember properties
-      inputs.push(
-        this.initInputFromFieldset(
-          field,
-          record && record[field.fieldPath]
-        )
-      );
-    }
+        inputs.push(
+          this.initInputFromFieldset(
+            field,
+            record && record[field.fieldPath]
+          )
+        );
+      }
 
     // store record Id as a hidden input on form
     inputs.push(new StringInput({

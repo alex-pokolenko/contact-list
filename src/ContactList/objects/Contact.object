@@ -24,11 +24,6 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>Account.Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
             <field>Birthdate</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>

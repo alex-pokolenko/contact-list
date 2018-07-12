@@ -11,9 +11,13 @@ export class InputControlService {
     const group: any = {};
 
     inputs.forEach(input => {
-      group[input.key] = !bypassRequired && input.required
+      // Don't include relationship fields into form
+      // TODO: revise this limitation and include relationship fields
+      if (!input.key.includes('.')) {
+        group[input.key] = !bypassRequired && input.required
         ? new FormControl(input.value || '', Validators.required) // add validator
         : new FormControl(input.value || '');
+      }
     });
 
     return new FormGroup(group);

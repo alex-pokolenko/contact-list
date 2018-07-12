@@ -65,8 +65,8 @@ public class HelperService {
     if (results.size() > 0) {
       for (SObject sobj : results[0]) {
         Map<String,Object> tmp = new Map<String,Object>{
-          'id' => sobj.get('Id'),
-          'name' => sobj.get('Name')
+          'Id' => sobj.get('Id'),
+          'Name' => sobj.get('Name')
         };
         resultList.add(tmp);
       }

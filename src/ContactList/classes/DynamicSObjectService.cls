@@ -13,10 +13,9 @@ public class DynamicSObjectService {
         continue;
       }
       Schema.DescribeFieldResult fieldDescribe = sObjectFieldMap.get(fieldName).getDescribe();
-      System.debug(fieldDescribe.getType());
 
       // TODO: modify ugly conditions. Check isUpdeteable / isCreateable on frontend.
-      if (fieldName == 'Id' || fieldDescribe.isUpdateable() || recordMap.get('Id') != NULL && fieldDescribe.isCreateable()) {
+      if (fieldName == 'Id' || fieldDescribe.isUpdateable() || (recordMap.get('Id') != NULL && fieldDescribe.isCreateable())) {
         Object typeCastedValue = castStringToFieldType(fieldValue, fieldDescribe.getType());
         targetRecord.put(fieldName, typeCastedValue);
       }
@@ -33,7 +32,7 @@ public class DynamicSObjectService {
     }
 
     switch on fieldType {
-      when ID, STRING, PICKLIST {
+      when ID, REFERENCE, STRING, PICKLIST {
         typeCastedValue = stringValue;
       }
       when INTEGER {

@@ -4,6 +4,7 @@ import { InputBase } from './input-base';
 import { StringInput } from './input-string';
 import { ContactTableService } from '../contact-table/contact-table.service';
 import { LookupInput } from './input-lookup';
+import { DateInput } from './input-date';
 
 @Injectable({
   providedIn: 'root'
@@ -102,9 +103,11 @@ export class DynamicInputsService {
         break;
       case 'date':
         // TODO: use custom datepicker
-        input = new StringInput(Object.assign({}, genericOptions, {
+        input = new DateInput(Object.assign({}, genericOptions, {
           type: 'date',
-          value
+          value,
+          min: '1970-01-01',
+          max: '2019-12-31'
         }));
         break;
       case 'reference':

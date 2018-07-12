@@ -8,14 +8,14 @@
     <input class="slds-input" *ngSwitchCase="'textbox'" [formControlName]="input.key"
             [id]="input.key" [type]="input.type">
 
-    <select [id]="input.key" *ngSwitchCase="'dropdown'" [formControlName]="input.key">
+    <!-- <select [id]="input.key" *ngSwitchCase="'dropdown'" [formControlName]="input.key">
       <option *ngFor="let opt of input.options" [value]="opt.key">{{opt.value}}</option>
-    </select>
+    </select> -->
 
     <!-- TODO: HARDCODE. pass objectName from field describe -->
     <app-lookup [id]="input.key" *ngSwitchCase="'lookup'" class="slds-form-element__control" [formControlName]="input.key"
       [selection]="input.value"
-      (selectionChange)="logLookup($event)"
+      (selectionChange)="form.controls[input.key].setValue($event.Id)"
       [objectName]="'Account'"
       [lookupField]="'Name'"
       (onRemove)="input.value=null">

@@ -94,6 +94,7 @@ export class DynamicInputsService {
         }));
         break;
       case 'double':
+      case 'integer':
         input = new StringInput(Object.assign({}, genericOptions, {
           type: 'number',
           value: value ? value.toString() : value
@@ -112,6 +113,9 @@ export class DynamicInputsService {
           type: 'reference',
           value
         }));
+        break;
+      case 'picklist':
+        // TODO: populate select with picklist options
         break;
       default:
         break;

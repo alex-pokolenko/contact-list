@@ -12,6 +12,15 @@
       <option *ngFor="let opt of input.options" [value]="opt.key">{{opt.value}}</option>
     </select>
 
+    <!-- TODO: HARDCODE. pass objectName from field describe -->
+    <app-lookup [id]="input.key" *ngSwitchCase="'lookup'" class="slds-form-element__control" [formControlName]="input.key"
+      [selection]="input.value"
+      (selectionChange)="logLookup($event)"
+      [objectName]="'Account'"
+      [lookupField]="'Name'"
+      (onRemove)="input.value=null">
+    </app-lookup>
+
   </div> 
   <div class="slds-form-element__help" *ngIf="!isValid">This field is required</div>
 </div>

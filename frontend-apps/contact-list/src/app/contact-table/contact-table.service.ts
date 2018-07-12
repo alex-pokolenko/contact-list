@@ -57,10 +57,16 @@ export class ContactTableService {
         Id: contact.Id
       };
       for (const column of columns) {
-        const path = column.fieldPath.split('.');
-        row[column.fieldPath] = path.length === 2
-          ? contact[path[0]][path[1]]
-          : contact[path[0]];
+        if (column.type === 'reference') {
+          // TODO: REMOVE HARDCODE!
+          row[column.fieldPath] = contact['Account'];
+        } else {
+          const path = column.fieldPath.split('.');
+          const pathBase = contact[path[0]];
+          row[column.fieldPath] = path.length === 2
+            ? (pathBase ? contact[path[0]][path[1]] : null)
+            : contact[path[0]];
+        }
       }
       return row;
     });

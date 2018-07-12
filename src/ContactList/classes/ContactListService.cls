@@ -31,6 +31,7 @@ public class ContactListService {
             ? relatedObjectType[0].getDescribe().getName()
             : NULL;
           fieldDescribeMap.put('relatedObjectType', relatedObjectName);
+          fieldDescribeMap.put('relationshipName', fieldDescribe.getRelationshipName());
         }
       }
 
@@ -53,13 +54,12 @@ public class ContactListService {
     for (Schema.FieldSetMember field : HelperService.getFieldSetMembers(OBJECT_TYPE, FIELDSET_NAME)) {
       // if field type is reference, also get Name field for related object to populate lookup input.
       if (field.getType() == DisplayType.REFERENCE) {
-        String relatedRecordName;
+        String relationshipName;
 
         Schema.DescribeFieldResult fieldDescribe = sObjectFieldMap.get(field.fieldpath).getDescribe();
-        Schema.sObjectType relatedObjectType = fieldDescribe.getReferenceTo()[0];
-        relatedRecordName = relatedObjectType.getDescribe().getName() + '.Name';
+        relationshipName = fieldDescribe.getRelationshipName() + '.Name';
 
-        fieldsToSelect.add(relatedRecordName);
+        fieldsToSelect.add(relationshipName);
       }
       fieldsToSelect.add(field.getFieldPath());
     }

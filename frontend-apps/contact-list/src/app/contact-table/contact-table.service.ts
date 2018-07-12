@@ -59,7 +59,7 @@ export class ContactTableService {
       for (const field of fields) {
         if (field.type === 'reference') {
           // TODO: REMOVE HARDCODE!
-          row[field.fieldPath] = contact[field.relatedObjectType];
+          row[field.fieldPath] = contact[field.relationshipName];
         } else {
           const path = field.fieldPath.split('.');
           const pathBase = contact[path[0]];

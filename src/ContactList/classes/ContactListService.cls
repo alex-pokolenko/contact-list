@@ -6,9 +6,37 @@ public class ContactListService {
    * TODO: return additional details of DescribeFieldResult
    * @return   return description
    */
-  public static List<Schema.FieldSetMember> initColumns() {
+  public static List<Object> initColumns() {
     List<Schema.FieldSetMember> fsMembers = HelperService.getFieldSetMembers(OBJECT_TYPE, FIELDSET_NAME);
-    return fsMembers;
+    Map<String, SObjectField> sObjectFieldMap = HelperService.getSobjectFields(OBJECT_TYPE);
+
+    List<Object> fieldsetDescribe = new List<Object>();
+    for (Schema.FieldSetMember fsMember : fsMembers) {
+      Schema.DescribeFieldResult fieldDescribe = sObjectFieldMap.containsKey(fsMember.getFieldPath()) ? sObjectFieldMap.get(fsMember.getFieldPath()).getDescribe() : NULL;
+
+      Map<String, Object> fieldDescribeMap;
+      if (fieldDescribe != NULL) {
+        // TODO: include other info
+        fieldDescribeMap = new Map<String, Object> {
+          'dbRequired' => fsMember.getDbRequired(),
+          'fieldPath' => fsMember.getFieldPath(),
+          'label' => fsMember.getLabel(),
+          'type' => fsMember.getType().name().toLowerCase(), // TODO: also pass DisplayType.values() to frontend to replace hardcode
+          'isFilterable' => fieldDescribe.isFilterable()
+        };
+
+        if (fieldDescribe.getType() == DisplayType.REFERENCE) {
+          List<Schema.sObjectType> relatedObjectType = fieldDescribe.getReferenceTo();
+          String relatedObjectName = relatedObjectType != NULL && !relatedObjectType.isEmpty()
+            ? relatedObjectType[0].getDescribe().getName()
+            : NULL;
+          fieldDescribeMap.put('relatedObjectType', relatedObjectName);
+        }
+      }
+
+      fieldsetDescribe.add(fieldDescribeMap);
+    }
+    return fieldsetDescribe;
   }
 
   public static List<sObject> getRecords(String filter) {

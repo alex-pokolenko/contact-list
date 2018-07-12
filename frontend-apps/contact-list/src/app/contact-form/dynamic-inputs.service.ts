@@ -83,7 +83,7 @@ export class DynamicInputsService {
     const genericOptions = {
       key: field.fieldPath,
       label: field.label,
-      required: field.dbRequired || field.required
+      required: field.dbRequired
     };
 
     switch (field.type) {

@@ -9,19 +9,55 @@ public class ContactListService {
   }
 
   public static List<sObject> getRecords(String filter) {
-    /* TODO: limit records numper by implementing server-side pagination */
+    /* TODO: limit records number by implementing server-side pagination */
+    Map<String, Object> filterMap = (Map<String, Object>)JSON.deserializeUntyped(filter);
+    filter = '';
+    Date dateValue;
 
-    String queryFilter = getFilterQuery(
-      (Map<String, Object>)JSON.deserializeUntyped(filter)
-    );
+    Map<String, SObjectField> sObjectFieldMap = HelperService.getSobjectFields(OBJECT_TYPE);
 
-    String query = 'SELECT ';
-    for(Schema.FieldSetMember field : HelperService.getFieldSetMembers(OBJECT_TYPE, FIELDSET_NAME)) {
-      query += field.getFieldPath() + ', ';
+    for (String fieldName : filterMap.keySet()) {
+      String fieldValue = (String)filterMap.get(fieldName);
+
+      // TODO: fieldDescribe == NULL is a temporary workaround for relationship fields like Account.Name
+      Schema.DescribeFieldResult fieldDescribe = sObjectFieldMap.containsKey(fieldName) ? sObjectFieldMap.get(fieldName).getDescribe() : NULL;
+      if (!String.isBlank(fieldValue) && (fieldDescribe == NULL || fieldDescribe.isFilterable()))
+        // TODO: LIKE will only work for string types. Need to cast types properly.
+        if (fieldDescribe == NULL || fieldDescribe.getType() == DisplayType.STRING) {
+          System.debug(fieldName);
+          System.debug(fieldValue);
+          filter += fieldName + ' LIKE \'%' + String.escapeSingleQuotes(fieldValue) + '%\' AND ';
+        }
+        else if (fieldDescribe.getType() == DisplayType.DATE) {
+          dateValue = Date.valueOf(fieldValue);
+          filter += fieldName + ' = :dateValue AND ';
+        }
     }
 
-    query += 'Id FROM ' + OBJECT_TYPE + queryFilter;
+    if (!String.isBlank(filter)) {
+      filter = ' WHERE ' + filter.removeEnd(' AND ');
+    }
 
+    String queryFilter = filter;
+
+    String query = 'SELECT ';
+    Set<String> fieldsToSelect = new Set<String>();
+    for(Schema.FieldSetMember field : HelperService.getFieldSetMembers(OBJECT_TYPE, FIELDSET_NAME)) {
+      // if field type is reference, also get Name field for related object to populate lookup input.
+      if (field.getType() == DisplayType.REFERENCE) {
+        String relatedRecordName;
+
+        Schema.DescribeFieldResult fieldDescribe = sObjectFieldMap.get(field.fieldpath).getDescribe();
+        Schema.sObjectType relatedObjectType = fieldDescribe.getReferenceTo()[0];
+        relatedRecordName = relatedObjectType.getDescribe().getName() + '.Name';
+
+        fieldsToSelect.add(relatedRecordName);
+      }
+      fieldsToSelect.add(field.getFieldPath());
+    }
+    String fields = String.join(new List<String>(fieldsToSelect), ', ');
+
+    query += fields + ', Id FROM ' + OBJECT_TYPE + queryFilter;
     return Database.query(query);
   }
 
@@ -41,7 +77,7 @@ public class ContactListService {
         if (fieldDescribe == NULL || fieldDescribe.getType() == DisplayType.STRING) {
           System.debug(fieldName);
           System.debug(fieldValue);
-        filter += fieldName + ' LIKE \'%' + String.escapeSingleQuotes(fieldValue) + '%\' AND ';
+          filter += fieldName + ' LIKE \'%' + String.escapeSingleQuotes(fieldValue) + '%\' AND ';
         }
         else if (fieldDescribe.getType() == DisplayType.DATE) {
           dateValue = Date.valueOf(fieldValue);

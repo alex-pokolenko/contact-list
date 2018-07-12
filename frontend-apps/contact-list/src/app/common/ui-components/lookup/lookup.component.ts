@@ -1,16 +1,25 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { UtilsModule } from '../utils/utils.module';
 import { SfdcRemotingService } from '../../../core/sfdc-remoting/sfdc-remoting.service';
 
 import * as isEqual from 'lodash.isEqual';
 
+export const LOOKUP_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => LookupComponent),
+  multi: true
+};
+
 @Component({
   selector: 'app-lookup',
   templateUrl: './lookup.component.html',
-  styleUrls: ['./lookup.component.scss']
+  styleUrls: ['./lookup.component.scss'],
+  providers: [LOOKUP_VALUE_ACCESSOR]
 })
-export class LookupComponent implements OnInit, OnChanges {
+export class LookupComponent implements OnInit, OnChanges, ControlValueAccessor {
+
   // placeholder to show for blank input
   @Input() placeholder = 'Search...';
   // SFDC object to search
@@ -19,7 +28,7 @@ export class LookupComponent implements OnInit, OnChanges {
 
   private _lookupField: string;
   @Input() set lookupField(value: string) {
-    this._lookupField = value.toLowerCase();
+    this._lookupField = value;
   }
   get lookupField(): string {
     return this._lookupField;
@@ -55,6 +64,19 @@ export class LookupComponent implements OnInit, OnChanges {
 
   // suggestion that was selected (by click or Enter).
   // selection: any = null;
+
+  writeValue(obj: any): void {
+    this.inputValue = this.resolveLabel(obj) || obj;
+  }
+  registerOnChange(fn: any): void {
+    throw new Error('Method not implemented.');
+  }
+  registerOnTouched(fn: any): void {
+    throw new Error('Method not implemented.');
+  }
+  setDisabledState?(isDisabled: boolean): void {
+    throw new Error('Method not implemented.');
+  }
 
   onInputChange($event: any): void {
     this.lookup($event);

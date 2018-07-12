@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { InputBase } from './input-base';
 import { StringInput } from './input-string';
 import { ContactTableService } from '../contact-table/contact-table.service';
+import { LookupInput } from './input-lookup';
 
 @Injectable({
   providedIn: 'root'
@@ -99,13 +100,18 @@ export class DynamicInputsService {
         }));
         break;
       case 'date':
+        // TODO: use custom datepicker
         input = new StringInput(Object.assign({}, genericOptions, {
           type: 'date',
           value
         }));
         break;
-      case 'lookup':
+      case 'reference':
         // init lookup
+        input = new LookupInput(Object.assign({}, genericOptions, {
+          type: 'reference',
+          value
+        }));
         break;
       default:
         break;

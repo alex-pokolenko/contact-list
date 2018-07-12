@@ -41,4 +41,39 @@ public class HelperService {
 
     return fieldMap;
   }
+
+  public static Map<String, Object> lookupFilter(String params) {
+    Map<String, Object> paramsMap = (Map<String, Object>)JSON.deserializeUntyped(params);
+    Map<String, Object> resultMap = new Map<String, Object>();
+    String searchStr = (String) paramsMap.get('searchString');
+    String searchObj = (String) paramsMap.get('searchObject');
+    searchObj = Type.forName(searchObj).getName();
+
+    // provides WHERE condition
+    String filterStr = (String) paramsMap.get('filterString');
+
+    searchStr = '\'*' + searchStr + '*\'';
+    if (filterStr == NULL)
+      filterStr = '';
+
+    String soslQuery = 
+      'FIND :searchStr ' + 
+      'IN NAME FIELDS RETURNING ' + searchObj + 
+      ' (Id, Name ' + filterStr + ' ORDER BY Name) LIMIT 10';
+    List<List<SObject>> results =  Search.query(soslQuery);
+    List<Object> resultList = new List<Object>();
+    if (results.size() > 0) {
+      for (SObject sobj : results[0]) {
+        Map<String,Object> tmp = new Map<String,Object>{
+          'id' => sobj.get('Id'),
+          'name' => sobj.get('Name')
+        };
+        resultList.add(tmp);
+      }
+    }
+    resultMap.put('data', resultList);
+
+    return resultMap;
+  }
+
 }

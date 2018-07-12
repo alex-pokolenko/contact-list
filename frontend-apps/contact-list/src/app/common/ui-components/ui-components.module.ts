@@ -12,6 +12,8 @@ import { TableMessagingService } from './data-table/table-messaging.service';
 import { OrderModule } from 'ngx-order-pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ClickOutsideModule } from 'ng-click-outside';
+import { UtilsModule } from './utils/utils.module';
+import { LookupComponent } from './lookup/lookup.component';
 
 @NgModule({
   imports: [
@@ -20,21 +22,24 @@ import { ClickOutsideModule } from 'ng-click-outside';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    ClickOutsideModule
+    ClickOutsideModule,
+    UtilsModule
   ],
   declarations: [
     SldsIconComponent,
     DataTableComponent,
     DataTableRowComponent,
     ModalComponent,
-    DatepickerComponent
+    DatepickerComponent,
+    LookupComponent
   ],
   exports: [
     SldsIconComponent,
     DataTableComponent,
     DataTableRowComponent,
     ModalComponent,
-    DatepickerComponent
+    DatepickerComponent,
+    LookupComponent
   ],
   providers: [
     TableMessagingService

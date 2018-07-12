@@ -51,19 +51,19 @@ export class ContactTableService {
     this.tableSubject.next(this.table);
   }
 
-  mapFields(contacts: any, columns: any): any {
+  mapFields(contacts: any, fields: any): any {
     return contacts.map(contact => {
       const row = {
         Id: contact.Id
       };
-      for (const column of columns) {
-        if (column.type === 'reference') {
+      for (const field of fields) {
+        if (field.type === 'reference') {
           // TODO: REMOVE HARDCODE!
-          row[column.fieldPath] = contact['Account'];
+          row[field.fieldPath] = contact[field.relatedObjectType];
         } else {
-          const path = column.fieldPath.split('.');
+          const path = field.fieldPath.split('.');
           const pathBase = contact[path[0]];
-          row[column.fieldPath] = path.length === 2
+          row[field.fieldPath] = path.length === 2
             ? (pathBase ? contact[path[0]][path[1]] : null)
             : contact[path[0]];
         }

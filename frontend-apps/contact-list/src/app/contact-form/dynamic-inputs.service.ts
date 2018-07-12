@@ -83,7 +83,7 @@ export class DynamicInputsService {
     const genericOptions = {
       key: field.fieldPath,
       label: field.label,
-      required: field.dbRequired || field.required
+      required: field.dbRequired
     };
 
     switch (field.type) {
@@ -94,6 +94,7 @@ export class DynamicInputsService {
         }));
         break;
       case 'double':
+      case 'integer':
         input = new StringInput(Object.assign({}, genericOptions, {
           type: 'number',
           value: value ? value.toString() : value
@@ -110,8 +111,12 @@ export class DynamicInputsService {
         // init lookup
         input = new LookupInput(Object.assign({}, genericOptions, {
           type: 'reference',
-          value
+          value,
+          relatedObjectType: field.relatedObjectType
         }));
+        break;
+      case 'picklist':
+        // TODO: populate select with picklist options
         break;
       default:
         break;

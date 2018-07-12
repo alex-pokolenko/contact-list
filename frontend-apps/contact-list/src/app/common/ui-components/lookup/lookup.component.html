@@ -1,0 +1,52 @@
+<div class="lookup slds-combobox_container slds-has-inline-listbox"
+  [ngClass]="{'slds-has-input-focus': isOpen}"
+  (click)="toggle()" 
+  (clickOutside)="close()">
+  <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-combobox-lookup"  aria-haspopup="listbox" role="combobox"
+  [attr.aria-expanded]="isOpen"
+  [ngClass]="{'slds-combobox-lookup': !isOpen, 'slds-is-open': isOpen}">
+    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
+      <input type="text" class="slds-input slds-combobox__input" aria-autocomplete="list" autocomplete="off" role="textbox" 
+      [id]="comboboxId"
+      [attr.placeholder]="placeholder" 
+      [attr.aria-controls]="listboxId"
+      (keydown.Esc)="keyEventsHandler($event)"
+      (keydown.Enter)="keyEventsHandler($event)"
+      (keydown.ArrowDown)="keyEventsHandler($event)"
+      (keydown.ArrowUp)="keyEventsHandler($event)"
+      attr.aria-activedescendant="{{listboxOptionId}}-{{focusedSugestion}}"
+      [ngClass]="{'is-selected': isSelected}"
+      [readonly]="isSelected ? 'readonly' : null"
+      [(ngModel)]="inputValue"
+      (ngModelChange)="onInputChange($event)"
+      >
+      <span *ngIf="!isSelected">
+        <app-slds-icon 
+          styling="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right icon icon_lookup"
+          path="/utility-sprite/svg/symbols.svg#search">
+        </app-slds-icon> 
+      </span>
+      <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" *ngIf="isSelected" (click)="clearSelection();">
+        <app-slds-icon 
+          styling="slds-button__icon"
+          path="/utility-sprite/svg/symbols.svg#close">
+        </app-slds-icon> 
+      </button>
+    </div>
+    <div id="{{listboxId}}" role="listbox">
+      <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" role="presentation">
+        <li role="presentation" class="slds-listbox__item" 
+        (click)="changeSelection(suggestion, $event)"
+        *ngFor="let suggestion of suggestions; let i=index;">
+          <span class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option"
+          id="{{listboxOptionId}}-{{i}}" 
+          [ngClass]="{'slds-has-focus': focusedSugestion===i}" *ngIf="isHidden(suggestion) == false">
+            <span class="slds-media__body">
+              <span class="slds-listbox__option-text slds-listbox__option-text_entity">{{resolveLabel(suggestion)}}</span>
+            </span>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

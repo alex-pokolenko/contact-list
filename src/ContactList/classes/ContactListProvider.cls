@@ -13,6 +13,9 @@ public class ContactListProvider implements ProviderInterface {
       when 'saveRecord' {
         result = ContactListService.saveRecord(params);
       }
+      when 'lookupFilter' {
+        result = HelperService.lookupFilter(params);
+      }
     }
 
     return JSON.serialize(result);

@@ -2,8 +2,8 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { takeWhile } from 'rxjs/operators';
 
-import { InputBase } from './input-base';
-import { InputControlService } from './input-control.service';
+import { InputBase } from './input-controls/input-base';
+import { InputControlService } from './input-controls/input-control.service';
 import { ContactFormService } from './contact-form.service';
 
 @Component({
@@ -56,6 +56,13 @@ export class ContactFormComponent implements OnInit, OnDestroy {
    */
   onSubmit() {
     // broadcast form value to outer components
+    for (const input of this.inputs) {
+      if (input.controlType === 'lookup') {
+        this.form.value[input.key] = this.form.value[input.key] && this.form.value[input.key]['Id'] != null
+        ? this.form.value[input.key]['Id']
+        : this.form.value[input.key];
+      }
+    }
     this.formService.setFormValue({
       id: this.formId,
       value: this.form.value

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { InputBase } from '../input-base';
+import { InputBase } from '../input-controls/input-base';
 
 @Component({
   selector: 'app-dynamic-input',
@@ -19,6 +19,10 @@ export class DynamicInputComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  setFormValue(value: any): void {
+    this.form.controls[this.input.key].setValue(value);
   }
 
 }

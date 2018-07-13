@@ -23,4 +23,8 @@ export class DataTableRowComponent implements OnInit {
     this.messagingService.edit(row);
   }
 
+  getReferenceValue(referenceField) {
+    return referenceField ? referenceField['Name'] : '';
+  }
+
 }

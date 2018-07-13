@@ -2,8 +2,8 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { takeWhile } from 'rxjs/operators';
 
-import { InputBase } from './input-base';
-import { InputControlService } from './input-control.service';
+import { InputBase } from './input-controls/input-base';
+import { InputControlService } from './input-controls/input-control.service';
 import { ContactFormService } from './contact-form.service';
 
 @Component({

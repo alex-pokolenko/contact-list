@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { InputBase } from './input-base';
-import { StringInput } from './input-string';
+import { InputBase } from './input-controls/input-base';
+import { StringInput } from './input-controls/input-string';
 import { ContactTableService } from '../contact-table/contact-table.service';
-import { LookupInput } from './input-lookup';
-import { DateInput } from './input-date';
+import { LookupInput } from './input-controls/input-lookup';
+import { DateInput } from './input-controls/input-date';
 
 @Injectable({
   providedIn: 'root'

@@ -66,16 +66,13 @@ export class LookupComponent implements OnInit, OnChanges, ControlValueAccessor 
   // selection: any = null;
 
   writeValue(obj: any): void {
-    this.inputValue = this.resolveLabel(obj) || obj;
+    this.inputValue = this.resolveLabel(obj);
   }
   registerOnChange(fn: any): void {
-    throw new Error('Method not implemented.');
   }
   registerOnTouched(fn: any): void {
-    throw new Error('Method not implemented.');
   }
   setDisabledState?(isDisabled: boolean): void {
-    throw new Error('Method not implemented.');
   }
 
   onInputChange($event: any): void {
@@ -107,7 +104,7 @@ export class LookupComponent implements OnInit, OnChanges, ControlValueAccessor 
     /* if lookup field name is specified and suggestion type is object - get corresponding field
      * if suggestion is string - just return it
     **/
-    return this._lookupField && typeof value !== 'string' ? value[this._lookupField] : value;
+    return this._lookupField && value && typeof value !== 'string' ? value[this._lookupField] : value;
   }
 
   constructor(private sfdcService: SfdcRemotingService) { }

@@ -21,4 +21,8 @@ export class DynamicInputComponent implements OnInit {
   ngOnInit() {
   }
 
+  setFormValue(value: any): void {
+    this.form.controls[this.input.key].setValue(value);
+  }
+
 }

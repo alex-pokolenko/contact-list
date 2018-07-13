@@ -56,6 +56,13 @@ export class ContactFormComponent implements OnInit, OnDestroy {
    */
   onSubmit() {
     // broadcast form value to outer components
+    for (const input of this.inputs) {
+      if (input.controlType === 'lookup') {
+        this.form.value[input.key] = this.form.value[input.key] && this.form.value[input.key]['Id'] != null
+        ? this.form.value[input.key]['Id']
+        : this.form.value[input.key];
+      }
+    }
     this.formService.setFormValue({
       id: this.formId,
       value: this.form.value

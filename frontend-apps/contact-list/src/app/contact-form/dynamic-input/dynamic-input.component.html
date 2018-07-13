@@ -18,10 +18,10 @@
     <!-- TODO: HARDCODE. pass objectName from field describe -->
     <app-lookup [id]="input.key" *ngSwitchCase="'lookup'" class="slds-form-element__control" [formControlName]="input.key"
       [selection]="input.value"
-      (selectionChange)="form.controls[input.key].setValue($event.Id)"
+      (selectionChange)="setFormValue($event)"
       [objectName]="input.relatedObjectType"
       [lookupField]="'Name'"
-      (onRemove)="input.value=null">
+      (onRemove)="setFormValue(null)">
     </app-lookup>
 
   </div> 

@@ -82,7 +82,16 @@ export class ContactViewComponent implements OnInit, OnDestroy {
       .pipe(takeWhile(() => this.isAlive))
       .subscribe(
         form => {
-          this.contactViewService.processForm(form);
+          this.contactViewService.processForm(form)
+          .then(result => {
+            console.log(result);
+            if (result.success) {
+              this.modalOptions.isModalOpen = false;
+              this.contactViewService.refreshTable();
+            } else {
+              // TODO: show error
+            }
+          });
         }
       );
   }

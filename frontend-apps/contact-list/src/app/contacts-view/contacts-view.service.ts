@@ -57,6 +57,8 @@ export class ContactViewService {
         form.value
       );
     }
+
+    return result;
   }
 
   async saveRecord(record: any): Promise<any> {
@@ -65,6 +67,10 @@ export class ContactViewService {
       'saveRecord',
       record
     );
+  }
+
+  async refreshTable() {
+    await this.contactTableService.getRecords();
   }
 
 }
